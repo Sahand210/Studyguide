@@ -10,9 +10,9 @@
     --bg-main: #fcfdfe;        
     --bg-element: #f0f4f8;     
     --accent: #d68a9d;         /* Dusty Rose Pink */
-    --accent-light: #f4bdc9;   /* Soft Pink */
-    --accent-blue: #8caebd;    /* Soft Blue */
-    --text-head: #2a3b4c;      /* Deep Slate */
+    --accent-light: #f4bdc9;   
+    --accent-blue: #8caebd;    
+    --text-head: #2a3b4c;      
     --text-body: #4a5d73;      
     --text-muted: #829ab1;     
   }
@@ -38,6 +38,11 @@
   .subj-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; background:var(--accent-light); color:white;}
   .subj-name { font-family:'Playfair Display',serif; font-size:18px; color:var(--text-head); font-weight:700; }
   .subj-detail { font-size:12px; color:var(--text-muted); margin-top:2px; }
+
+  /* JOURNEY PROGRESS BAR */
+  .prog-track { background: #f4ebd8; height: 12px; border-radius: 10px; margin-top: 12px; overflow: hidden; position: relative; }
+  .prog-fill { background: #cca969; height: 100%; width: 0%; border-radius: 10px; transition: width 1s ease-out; }
+  .prog-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 8px; font-weight: 600; }
 
   /* QURAN PLAYER */
   .quran-card { background:linear-gradient(135deg, #f8f9fa, #f0f4f8); border-left: 4px solid var(--accent-blue); }
@@ -78,15 +83,6 @@
   
   .phone-warning { background: #fff0f3; color: #d6336c; font-size: 13px; font-weight: 600; padding: 12px; border-radius: 12px; display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; border: 1px dashed #ffb3c6;}
 
-  /* BIG CALENDAR */
-  .cal-month-title { font-family:'Playfair Display',serif; font-size:22px; color:var(--text-head); margin: 24px 0 10px; font-weight: 700; text-align:center;}
-  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; background: white; padding: 16px; border-radius: 16px; box-shadow:0 4px 20px rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.03);}
-  .cal-day-name { font-size: 10px; font-weight: 700; color: var(--text-muted); text-align: center; text-transform: uppercase; margin-bottom: 8px;}
-  .cal-cell { aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--text-body); background: #f8f9fa; position: relative; flex-direction: column;}
-  .cal-cell.empty { background: transparent; }
-  .cal-cell.has-block { color: white; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);}
-  .cal-cell .exam-icon { font-size: 14px; position: absolute; top: -6px; right: -6px; background: white; border-radius: 50%; padding: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 2;}
-
   /* STATS DASHBOARD */
   .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;}
   .stat-card { background:white; padding:24px 20px; border-radius:16px; text-align:center; box-shadow:0 4px 20px rgba(214,138,157,.06); border:1px solid rgba(214,138,157,.1); }
@@ -101,6 +97,32 @@
   .page { display:none; animation: fadeIn 0.3s ease; }
   .page.active { display:block; }
   @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
+  /* =========================================
+     GAMIFIED PLAN PAGE (BROWN/CREAM DESIGN)
+     ========================================= */
+  #page-plan { background-color: #fbf8f1; min-height: 100vh; padding-bottom: 100px; }
+  .plan-hero { background: linear-gradient(135deg, #4a3424 0%, #6b4c34 100%); padding: 60px 24px 40px; text-align: center; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(74, 52, 36, 0.15);}
+  .plan-hero-badge { display: inline-block; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 20px; margin-bottom: 16px; }
+  .plan-hero h1 { font-family: 'Playfair Display', serif; font-size: 36px; color: #fff; margin-bottom: 8px; font-style: italic;}
+  .plan-hero p { color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 400; }
+  
+  .plan-sec { max-width: 480px; margin: 0 auto; padding: 0 20px; }
+  .plan-phase-title { background: #edf2f7; color: #4a5568; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px; margin: 24px 0 12px; }
+  .plan-phase-title.gold { background: #fefcbf; color: #744210; }
+  
+  .level-card { display: flex; gap: 16px; background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02); transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden;}
+  .level-icon { width: 48px; height: 48px; border-radius: 50%; background: #f0f4f8; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+  .level-info { flex: 1; display: flex; flex-direction: column; justify-content: center;}
+  .level-title { font-size: 15px; font-weight: 700; color: #3d2b1f; margin-bottom: 4px; }
+  .level-meta { font-size: 12px; color: #829ab1; line-height: 1.4; }
+  .level-status { margin-top: 8px; display: inline-flex; background: #e6fffa; color: #285e61; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; align-items: center; gap: 4px; width: fit-content; }
+  
+  /* LOCKET STATE */
+  .level-card.locked { opacity: 0.5; filter: grayscale(100%); cursor: not-allowed; }
+  .level-card.locked .level-icon { background: #e2e8f0; }
+  .locked-overlay { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 20px; opacity: 0.5; }
+
 </style>
 </head>
 <body>
@@ -109,14 +131,14 @@
   <button class="nb active" onclick="showPage('today',this)"><span class="nb-icon">🌸</span>Today</button>
   <button class="nb" onclick="showPage('timer',this)"><span class="nb-icon">⏱️</span>Timer</button>
   <button class="nb" onclick="showPage('checklist',this)"><span class="nb-icon">✅</span>Tasks</button>
-  <button class="nb" onclick="showPage('calendar',this)"><span class="nb-icon">🗓️</span>Calendar</button>
+  <button class="nb" onclick="showPage('plan',this)"><span class="nb-icon">🗺️</span>Plan</button>
   <button class="nb" onclick="showPage('stats',this)"><span class="nb-icon">📊</span>Activity</button>
 </nav>
 
 <div id="page-today" class="page active">
   <div class="hero">
     <div class="hero-badge">📚 Level up your mind</div>
-    <h1>Bismillah,<br><em>let's begin.</em> 🌸</h1>
+    <h1>Bismillah Lare Gyan,<br><em>let's begin.</em> 🌸</h1>
   </div>
 
   <div class="pull">
@@ -126,6 +148,20 @@
       <div class="subj-row" id="today-row">
         <div class="subj-icon" id="today-icon"></div>
         <div><div class="subj-name" id="today-name"></div><div class="subj-detail" id="today-detail"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="card">
+      <div class="lbl">🗓️ JOURNEY PROGRESS</div>
+      <div class="prog-track">
+        <div id="progress-fill" class="prog-fill"></div>
+      </div>
+      <div class="prog-labels">
+        <span>27 Mar</span>
+        <span id="progress-text">0% done</span>
+        <span>2 Jul</span>
       </div>
     </div>
   </div>
@@ -149,7 +185,7 @@
   <div class="hero" style="padding-bottom:32px;">
     <div class="hero-badge">Deep Work Zone</div>
     <h1><em>Focus</em> Mode 🧠</h1>
-    <p>Train your mind. You can do this.</p>
+    <p>Train your mind, Lare Gyan. You can do this.</p>
   </div>
   <div class="sec" style="text-align: center;">
     <div class="card" style="margin-top:20px;">
@@ -168,6 +204,8 @@
         <div class="phone-warning">
           <span>📵</span> Put your phone away, face down. Be present.
         </div>
+        
+        <audio id="break-audio" src="https://server8.mp3quran.net/afs/055.mp3" preload="none"></audio>
 
         <div class="btn-group">
           <button class="btn btn-secondary" onclick="resetTimer()">Reset</button>
@@ -182,18 +220,18 @@
   <div class="hero" style="padding-bottom:32px;">
     <div class="hero-badge">Daily Quests</div>
     <h1><em>Check it</em> off 🎯</h1>
-    <p>Complete all tasks to win today's level!</p>
+    <p>Complete all tasks, Lare Gyan, to win today's level!</p>
   </div>
   <div class="sec" style="margin-top:24px;" id="checklist"></div>
 </div>
 
-<div id="page-calendar" class="page">
-  <div class="hero" style="padding-bottom:32px;">
-    <div class="hero-badge">The Master Plan</div>
-    <h1>Your <em>Journey</em> 🗓️</h1>
-    <p>One day at a time. Trust the process.</p>
+<div id="page-plan" class="page">
+  <div class="plan-hero">
+    <div class="plan-hero-badge">Your Full Plan</div>
+    <h1>Smart Schedule</h1>
+    <p>Furthest exam first · closest last</p>
   </div>
-  <div class="sec" style="margin-top:10px;margin-bottom:20px;" id="calendar-container">
+  <div class="plan-sec" id="plan-container">
     </div>
 </div>
 
@@ -201,7 +239,7 @@
   <div class="hero" style="padding-bottom:32px;">
     <div class="hero-badge">Dashboard</div>
     <h1>Her <em>Activity</em> 📊</h1>
-    <p>Track your hard work and consistency.</p>
+    <p>Track your hard work and consistency, Lare Gyan.</p>
   </div>
   <div class="sec">
     <div class="stat-grid">
@@ -222,23 +260,23 @@
 </div>
 
 <script>
-// --- CORE DATA ---
+// --- CORE DATA (Updated to 2026) ---
 const PHASE1 = [
-  { date:'2025-03-27', label:'General Study — Level 1' },
-  { date:'2025-03-29', label:'General Study — Level 2' },
-  { date:'2025-03-30', label:'General Study — Level 3' },
-  { date:'2025-03-31', label:'General Study — Level 4' },
-  { date:'2025-04-01', label:'General Study — Boss Level!' },
+  { date:'2026-03-27', label:'General Study — Level 1' },
+  { date:'2026-03-29', label:'General Study — Level 2' },
+  { date:'2026-03-30', label:'General Study — Level 3' },
+  { date:'2026-03-31', label:'General Study — Level 4' },
+  { date:'2026-04-01', label:'General Study — Boss Level!' },
 ];
 
 const PHASE2_BLOCKS = [
-  { s:'Math',         icon:'📐', color:'#8caebd', exam:'2025-06-18', start:'2025-04-02', end:'2025-04-12' },
-  { s:'English',      icon:'🔤', color:'#d68a9d', exam:'2025-06-28', start:'2025-04-13', end:'2025-04-18' },
-  { s:'Chemistry',    icon:'⚗️', color:'#a3b899', exam:'2025-06-25', start:'2025-04-19', end:'2025-04-29' },
-  { s:'Arabic',       icon:'✍️', color:'#e6afbc', exam:'2025-06-21', start:'2025-04-30', end:'2025-05-06' },
-  { s:'Physics',      icon:'🔭', color:'#8caebd', exam:'2025-07-02', start:'2025-05-07', end:'2025-05-18' },
-  { s:'Kurdish',      icon:'📖', color:'#d68a9d', exam:'2025-06-14', start:'2025-05-19', end:'2025-05-24' },
-  { s:'Biology',      icon:'🧬', color:'#a3b899', exam:'2025-06-11', start:'2025-05-25', end:'2025-06-10' },
+  { s:'Math',         icon:'📐', color:'#8caebd', exam:'2026-06-18', start:'2026-04-02', end:'2026-04-12' },
+  { s:'English',      icon:'🔤', color:'#d68a9d', exam:'2026-06-28', start:'2026-04-13', end:'2026-04-18' },
+  { s:'Chemistry',    icon:'⚗️', color:'#a3b899', exam:'2026-06-25', start:'2026-04-19', end:'2026-04-29' },
+  { s:'Arabic',       icon:'✍️', color:'#e6afbc', exam:'2026-06-21', start:'2026-04-30', end:'2026-05-06' },
+  { s:'Physics',      icon:'🔭', color:'#8caebd', exam:'2026-07-02', start:'2026-05-07', end:'2026-05-18' },
+  { s:'Kurdish',      icon:'📖', color:'#d68a9d', exam:'2026-06-14', start:'2026-05-19', end:'2026-05-24' },
+  { s:'Biology',      icon:'🧬', color:'#a3b899', exam:'2026-06-11', start:'2026-05-25', end:'2026-06-10' },
 ];
 
 const MORNING_TASKS = {
@@ -269,11 +307,88 @@ const TODAY = () => { const d=new Date(); d.setHours(0,0,0,0); return d; };
 function getTodayBlock(td) {
   for (let p of PHASE1) if (D(p.date).getTime()===td.getTime()) return { phase:1, label:p.label, s:'General', icon:'📚' };
   for (let b of PHASE2_BLOCKS) if (td>=D(b.start) && td<=D(b.end)) return { phase:2, ...b };
-  if (td < D('2025-03-27')) return { phase:0, s:'Not started yet', icon:'⏳' };
+  if (td < D('2026-03-27')) return { phase:0, s:'Not started yet', icon:'⏳' };
   return { phase:4, s:'Exam Season!', icon:'🎉' };
 }
 
-// --- BUILD VIEWS ---
+// --- GAMIFIED PLAN DATA ---
+const GAME_LEVELS = [
+  { id: 0, phase: 1, title: 'General Study — Day 1', subtitle: 'Thursday 27 March', icon: '📚' },
+  { id: 1, phase: 1, title: 'General Study — Day 2', subtitle: 'Saturday 29 March', icon: '📚' },
+  { id: 2, phase: 1, title: 'General Study — Day 3', subtitle: 'Sunday 30 March', icon: '📚' },
+  { id: 3, phase: 1, title: 'General Study — Day 4', subtitle: 'Monday 31 March', icon: '📚' },
+  { id: 4, phase: 1, title: 'General Study — Day 5', subtitle: 'Tuesday 1 April', icon: '📚' },
+  { id: 5, phase: 2, title: 'Physics', subtitle: 'Exam: 2 July • Thursday<br>Review: 2 Apr → 13 Apr (10 days)', icon: '🔭' },
+  { id: 6, phase: 2, title: 'English', subtitle: 'Exam: 28 June • Sunday<br>Review: 14 Apr → 18 Apr (5 days)', icon: '🔤' },
+  { id: 7, phase: 2, title: 'Chemistry', subtitle: 'Exam: 25 June • Thursday<br>Review: 19 Apr → 29 Apr (11 days)', icon: '⚗️' },
+  { id: 8, phase: 2, title: 'Arabic', subtitle: 'Exam: 21 June • Sunday<br>Review: 30 Apr → 6 May (7 days)', icon: '✍️' },
+  { id: 9, phase: 2, title: 'Math', subtitle: 'Exam: 18 June • Thursday<br>Review: 7 May → 18 May (12 days)', icon: '📐' },
+  { id: 10, phase: 2, title: 'Kurdish', subtitle: 'Exam: 14 June • Sunday<br>Review: 19 May → 24 May (6 days)', icon: '📖' },
+  { id: 11, phase: 2, title: 'Biology', subtitle: 'Exam: 11 June • Thursday<br>Review: 25 May → 10 June (17 days)', icon: '🧬' }
+];
+
+function buildPlanGame() {
+  const container = document.getElementById('plan-container');
+  let savedProgress = JSON.parse(localStorage.getItem('gameProgress') || '[]');
+  
+  let html = `<div class="plan-phase-title">📌 PHASE 1 — GENERAL STUDY · 27 MAR — 1 APR</div>`;
+  let phase2HeaderAdded = false;
+
+  GAME_LEVELS.forEach((level, index) => {
+    if (level.phase === 2 && !phase2HeaderAdded) {
+      html += `<div class="plan-phase-title gold">📌 PHASE 2 — REVIEW (FURTHEST → CLOSEST) · APR-JUN</div>`;
+      phase2HeaderAdded = true;
+    }
+
+    let isUnlocked = (index === 0) || savedProgress.includes(index - 1);
+    let isDone = savedProgress.includes(index);
+
+    let cardClass = isUnlocked ? "" : "locked";
+    let statusHTML = "";
+    let lockHTML = "";
+
+    if (isDone) {
+      statusHTML = `<div class="level-status">✔ Done</div>`;
+    } else if (!isUnlocked) {
+      lockHTML = `<div class="locked-overlay">🔒</div>`;
+    } else {
+      statusHTML = `<div class="level-status" style="background:#e2e8f0; color:#4a5568;">Tap to complete</div>`;
+    }
+
+    html += `
+      <div class="level-card ${cardClass}" onclick="toggleGameLevel(${index}, ${isUnlocked})">
+        <div class="level-icon">${level.icon}</div>
+        <div class="level-info">
+          <div class="level-title">${level.title}</div>
+          <div class="level-meta">${level.subtitle}</div>
+          ${statusHTML}
+        </div>
+        ${lockHTML}
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+window.toggleGameLevel = function(index, isUnlocked) {
+  if (!isUnlocked) {
+    alert("🔒 Lare Gyan, you have to complete the previous level first to unlock this one!");
+    return;
+  }
+  let savedProgress = JSON.parse(localStorage.getItem('gameProgress') || '[]');
+  if (savedProgress.includes(index)) {
+    savedProgress = savedProgress.filter(i => i < index);
+  } else {
+    savedProgress.push(index);
+    if(index === 4) alert("🎉 YOU FINISHED PHASE 1 LARE GYAN! Phase 2 is now unlocked. You are amazing!");
+  }
+  localStorage.setItem('gameProgress', JSON.stringify(savedProgress));
+  buildPlanGame(); 
+};
+
+
+// --- BUILD OTHER VIEWS ---
 function buildToday() {
   const td = TODAY();
   document.getElementById('today-date').textContent = td.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
@@ -285,13 +400,34 @@ function buildToday() {
   document.getElementById('today-icon').textContent = block.icon || '📚';
   document.getElementById('today-icon').style.background = block.color || 'var(--accent-light)';
   document.getElementById('today-name').textContent = block.phase === 1 ? 'Phase 1: Bootcamp' : 'Focus: ' + block.s;
-  document.getElementById('today-detail').textContent = block.phase === 2 ? 'Master Level' : 'Let\'s go!';
+  document.getElementById('today-detail').textContent = block.phase === 2 ? 'Master Level' : (block.phase === 4 ? 'You made it!' : 'Let\'s go!');
   
   document.getElementById('sessions').innerHTML=`
     <div class="session"><div class="session-label">☀️ Morning Session</div>
       ${mTasks.map(([time,text])=>`<div class="task"><div class="task-time">${time}</div><div class="task-info"><div class="task-text">${text}</div></div></div>`).join('')}</div>
     <div class="session"><div class="session-label">🌙 Afternoon Session</div>
       ${aTasks.map(([time,text])=>`<div class="task"><div class="task-time">${time}</div><div class="task-info"><div class="task-text">${text}</div></div></div>`).join('')}</div>`;
+      
+  buildProgress();
+}
+
+function buildProgress() {
+  const startDate = new Date('2026-03-27').getTime();
+  const endDate = new Date('2026-07-02').getTime(); // Physics Exam
+  const today = TODAY().getTime();
+
+  let percent = 0;
+  if (today >= endDate) {
+    percent = 100;
+  } else if (today > startDate) {
+    percent = Math.round(((today - startDate) / (endDate - startDate)) * 100);
+  }
+
+  // Slight delay for the satisfying load animation
+  setTimeout(() => {
+    document.getElementById('progress-fill').style.width = percent + '%';
+    document.getElementById('progress-text').textContent = percent + '% done';
+  }, 100);
 }
 
 function buildChecklist() {
@@ -306,12 +442,12 @@ function buildChecklist() {
 
   document.getElementById('checklist').innerHTML=tasks.map((t,i)=>{
     const key='t'+i, c=stored[key]||false;
-    return `<div class="chk ${c?'done':''}" onclick="toggleChk(this,'${key}','${dateKey}', ${tasks.length})">
+    return `<div class="chk ${c?'done':''}" onclick="toggleChk(this,'${key}','${dateKey}')">
       <div class="chk-box">${c?'<span style="color:white;font-weight:bold;">✓</span>':''}</div><div class="chk-lbl">${t}</div></div>`;
   }).join('');
 }
 
-function toggleChk(el,key,dateKey, totalTasks){
+function toggleChk(el,key,dateKey){
   el.classList.toggle('done');
   const c=el.classList.contains('done');
   el.querySelector('.chk-box').innerHTML=c?'<span style="color:white;font-weight:bold;">✓</span>':'';
@@ -320,70 +456,13 @@ function toggleChk(el,key,dateKey, totalTasks){
   updateStats();
 }
 
-// --- BIG CALENDAR LOGIC ---
-function buildCalendar() {
-  const container = document.getElementById('calendar-container');
-  let html = '';
-  
-  // Months: April (3), May (4), June (5)
-  const months = [{ y:2025, m:3, name:'April' }, { y:2025, m:4, name:'May' }, { y:2025, m:5, name:'June' }];
-  
-  months.forEach(month => {
-    html += `<div class="cal-month-title">${month.name} 2025</div>`;
-    html += `<div class="cal-grid">
-      <div class="cal-day-name">Sun</div><div class="cal-day-name">Mon</div><div class="cal-day-name">Tue</div><div class="cal-day-name">Wed</div><div class="cal-day-name">Thu</div><div class="cal-day-name">Fri</div><div class="cal-day-name">Sat</div>`;
-    
-    const firstDay = new Date(month.y, month.m, 1).getDay();
-    const daysInMonth = new Date(month.y, month.m + 1, 0).getDate();
-    
-    // Empty cells for alignment
-    for (let i = 0; i < firstDay; i++) { html += `<div class="cal-cell empty"></div>`; }
-    
-    // Days
-    for (let d = 1; d <= daysInMonth; d++) {
-      const currentDate = new Date(month.y, month.m, d);
-      currentDate.setHours(0,0,0,0);
-      
-      let bg = '#f8f9fa';
-      let iconHTML = '';
-      let isBlock = false;
-
-      // Check Phase 2 Blocks
-      for (let b of PHASE2_BLOCKS) {
-        if (currentDate >= D(b.start) && currentDate <= D(b.end)) {
-          bg = b.color;
-          isBlock = true;
-        }
-        if (currentDate.getTime() === D(b.exam).getTime()) {
-          iconHTML = `<div class="exam-icon">📝</div>`;
-          bg = '#d6336c'; // Exam day red/pink
-          isBlock = true;
-        }
-      }
-
-      html += `<div class="cal-cell ${isBlock ? 'has-block' : ''}" style="background: ${bg};">${d}${iconHTML}</div>`;
-    }
-    html += `</div>`;
-  });
-
-  // Legend
-  html += `<div style="margin-top:20px; font-size:11px; text-align:center; color:var(--text-muted);">
-    <span style="display:inline-block; width:10px; height:10px; background:#8caebd; border-radius:50%; margin-right:4px;"></span> Math/Phys
-    <span style="display:inline-block; width:10px; height:10px; background:#d68a9d; border-radius:50%; margin:0 4px 0 10px;"></span> Eng/Kurd
-    <span style="display:inline-block; width:10px; height:10px; background:#a3b899; border-radius:50%; margin:0 4px 0 10px;"></span> Chem/Bio
-    <br><br>📝 = Exam Day!
-  </div>`;
-
-  container.innerHTML = html;
-}
-
 // --- POMODORO TIMER LOGIC ---
 let timerInterval;
 let studyMins = 25;
 let breakMins = 5;
 let timeLeft = 25 * 60; 
 let isRunning = false;
-let currentMode = 'study'; // 'study' or 'break'
+let currentMode = 'study';
 
 function setTimerDuration(sMins, bMins) {
   studyMins = sMins; breakMins = bMins;
@@ -399,10 +478,17 @@ function updateTimerDisplay() {
 }
 
 function toggleTimer() {
+  const breakAudio = document.getElementById('break-audio');
+  
   if (isRunning) {
     clearInterval(timerInterval);
     document.getElementById('start-btn').innerText = "Resume";
   } else {
+    // A tiny trick to unlock the audio so the phone allows it to play later automatically
+    if (timeLeft === studyMins * 60 && currentMode === 'study') {
+        breakAudio.play().then(() => breakAudio.pause()).catch(e => console.log("Audio unlock issue: ", e));
+    }
+    
     document.getElementById('start-btn').innerText = "Pause";
     timerInterval = setInterval(() => {
       timeLeft--;
@@ -410,18 +496,24 @@ function toggleTimer() {
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
         
-        // Save focus time
         if (currentMode === 'study') {
           let mins = parseInt(localStorage.getItem('focusMins') || '0') + studyMins;
           localStorage.setItem('focusMins', mins);
           updateStats();
-          alert(`Time's up! Amazing focus. Put your phone back down and take a ${breakMins} min break.`);
+          
+          alert(`Time is up Lare Gyan! Amazing focus. Close your eyes, rest your mind, and listen to the recitation for your ${breakMins} min break.`);
+          
           currentMode = 'break';
           timeLeft = breakMins * 60;
+          breakAudio.play(); // Auto-play soothing recitation
+          
         } else {
-          alert("Break is over! Ready to focus again?");
+          alert("Break is over Lare Gyan! Ready to focus and conquer again?");
+          
           currentMode = 'study';
           timeLeft = studyMins * 60;
+          breakAudio.pause(); // Stop recitation
+          breakAudio.currentTime = 0;
         }
         
         document.getElementById('timer-label').innerText = currentMode === 'study' ? "Study Time" : "Break Time";
@@ -443,6 +535,11 @@ function resetTimer() {
   document.getElementById('start-btn').innerText = "Start Focus";
   document.getElementById('timer-label').innerText = "Study Time";
   document.getElementById('timer-ui').style.borderColor = "var(--accent)";
+  
+  const breakAudio = document.getElementById('break-audio');
+  breakAudio.pause();
+  breakAudio.currentTime = 0;
+  
   updateTimerDisplay();
 }
 
@@ -475,7 +572,7 @@ function showPage(name, btn){
 }
 
 // Init
-buildToday(); buildCalendar(); buildChecklist(); setTimerDuration(25, 5); updateStats();
+buildToday(); buildPlanGame(); buildChecklist(); setTimerDuration(25, 5); updateStats();
 </script>
 </body>
 </html>
