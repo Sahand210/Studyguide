@@ -9,7 +9,7 @@
   :root {
     --bg-main: #fcfdfe;        
     --bg-element: #f0f4f8;     
-    --accent: #d68a9d;         /* Dusty Rose Pink */
+    --accent: #d68a9d;         
     --accent-light: #f4bdc9;   
     --accent-blue: #8caebd;    
     --text-head: #2a3b4c;      
@@ -37,7 +37,7 @@
   .subj-row { display:flex; align-items:center; gap:14px; border-radius:14px; padding:14px; margin-bottom:12px; }
   .subj-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; background:var(--accent-light); color:white;}
   .subj-name { font-family:'Playfair Display',serif; font-size:18px; color:var(--text-head); font-weight:700; }
-  .subj-detail { font-size:12px; color:var(--text-muted); margin-top:2px; }
+  .subj-detail { font-size:12px; color:var(--text-muted); margin-top:2px; line-height:1.4;}
 
   /* JOURNEY PROGRESS BAR */
   .prog-track { background: #f4ebd8; height: 12px; border-radius: 10px; margin-top: 12px; overflow: hidden; position: relative; }
@@ -122,6 +122,8 @@
   .level-card.locked { opacity: 0.5; filter: grayscale(100%); cursor: not-allowed; }
   .level-card.locked .level-icon { background: #e2e8f0; }
   .locked-overlay { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 20px; opacity: 0.5; }
+
+  .buffer-text { color: #d68a9d; font-weight: bold; font-style: italic; display:block; margin-top:2px; font-size:11px;}
 
 </style>
 </head>
@@ -229,7 +231,7 @@
   <div class="plan-hero">
     <div class="plan-hero-badge">Your Full Plan</div>
     <h1>Smart Schedule</h1>
-    <p>Furthest exam first · closest last</p>
+    <p>Adapts to your speed secretly 🤫</p>
   </div>
   <div class="plan-sec" id="plan-container">
     </div>
@@ -260,23 +262,30 @@
 </div>
 
 <script>
-// --- CORE DATA (Updated to 2026) ---
-const PHASE1 = [
-  { date:'2026-03-27', label:'General Study — Level 1' },
-  { date:'2026-03-29', label:'General Study — Level 2' },
-  { date:'2026-03-30', label:'General Study — Level 3' },
-  { date:'2026-03-31', label:'General Study — Level 4' },
-  { date:'2026-04-01', label:'General Study — Boss Level!' },
+// --- CORE DATA & HELPER DATES ---
+const D = s => new Date(s + 'T00:00:00');
+const TODAY = () => { let d = new Date(); d.setHours(0,0,0,0); return d; };
+const addDays = (d, num) => { let nd = new Date(d.getTime()); nd.setDate(nd.getDate() + num); return nd; };
+const fmt = d => d.toLocaleDateString('en-GB', {day:'numeric', month:'short'});
+
+// Phase 1 (Static Bootcamp)
+const P1_CONFIG = [
+  { id: 0, title: 'General Study — Day 1', date: '2026-03-27' },
+  { id: 1, title: 'General Study — Day 2', date: '2026-03-29' },
+  { id: 2, title: 'General Study — Day 3', date: '2026-03-30' },
+  { id: 3, title: 'General Study — Day 4', date: '2026-03-31' },
+  { id: 4, title: 'General Study — Boss Level!', date: '2026-04-01' }
 ];
 
-const PHASE2_BLOCKS = [
-  { s:'Math',         icon:'📐', color:'#8caebd', exam:'2026-06-18', start:'2026-04-02', end:'2026-04-12' },
-  { s:'English',      icon:'🔤', color:'#d68a9d', exam:'2026-06-28', start:'2026-04-13', end:'2026-04-18' },
-  { s:'Chemistry',    icon:'⚗️', color:'#a3b899', exam:'2026-06-25', start:'2026-04-19', end:'2026-04-29' },
-  { s:'Arabic',       icon:'✍️', color:'#e6afbc', exam:'2026-06-21', start:'2026-04-30', end:'2026-05-06' },
-  { s:'Physics',      icon:'🔭', color:'#8caebd', exam:'2026-07-02', start:'2026-05-07', end:'2026-05-18' },
-  { s:'Kurdish',      icon:'📖', color:'#d68a9d', exam:'2026-06-14', start:'2026-05-19', end:'2026-05-24' },
-  { s:'Biology',      icon:'🧬', color:'#a3b899', exam:'2026-06-11', start:'2026-05-25', end:'2026-06-10' },
+// Phase 2 (Dynamic with Hidden Buffers - Exact setup requested)
+const P2_SUBJECTS = [
+  { id: 5, s: 'Math',      icon: '📐', base: 9,  buf: 2, color: '#8caebd', exam: '2026-06-18' },
+  { id: 6, s: 'English',   icon: '🔤', base: 5,  buf: 1, color: '#d68a9d', exam: '2026-06-28' },
+  { id: 7, s: 'Chemistry', icon: '⚗️', base: 9,  buf: 2, color: '#a3b899', exam: '2026-06-25' },
+  { id: 8, s: 'Arabic',    icon: '✍️', base: 6,  buf: 1, color: '#e6afbc', exam: '2026-06-21' },
+  { id: 9, s: 'Physics',   icon: '🔭', base: 10, buf: 2, color: '#8caebd', exam: '2026-07-02' },
+  { id: 10, s:'Kurdish',   icon: '📖', base: 4,  buf: 2, color: '#d68a9d', exam: '2026-06-14' },
+  { id: 11, s:'Biology',   icon: '🧬', base: 15, buf: 2, color: '#a3b899', exam: '2026-06-11' }
 ];
 
 const MORNING_TASKS = {
@@ -301,106 +310,166 @@ const AFTERNOON_TASKS = {
   'Biology': [['2:00','Draw and label key diagrams 🖍️'],['4:30','Past paper MCQs and review ⏳']]
 };
 
-const D = s => { const d=new Date(s); d.setHours(0,0,0,0); return d; };
-const TODAY = () => { const d=new Date(); d.setHours(0,0,0,0); return d; };
 
-function getTodayBlock(td) {
-  for (let p of PHASE1) if (D(p.date).getTime()===td.getTime()) return { phase:1, label:p.label, s:'General', icon:'📚' };
-  for (let b of PHASE2_BLOCKS) if (td>=D(b.start) && td<=D(b.end)) return { phase:2, ...b };
-  if (td < D('2026-03-27')) return { phase:0, s:'Not started yet', icon:'⏳' };
-  return { phase:4, s:'Exam Season!', icon:'🎉' };
+// --- DYNAMIC SCHEDULE ENGINE ---
+function generateSchedule() {
+  let progress = JSON.parse(localStorage.getItem('gameProgressObj') || '{}');
+  
+  // Migrate older array progress if it exists
+  let oldProgress = JSON.parse(localStorage.getItem('gameProgress'));
+  if (Array.isArray(oldProgress)) {
+      oldProgress.forEach(id => { progress[id] = TODAY().toISOString().slice(0,10); });
+      localStorage.setItem('gameProgressObj', JSON.stringify(progress));
+      localStorage.removeItem('gameProgress');
+  }
+
+  let schedule = [];
+  let currDate = D('2026-04-02'); // Fixed start for Phase 2
+
+  P2_SUBJECTS.forEach(sub => {
+      let block = { ...sub };
+      block.start = new Date(currDate.getTime());
+      
+      if (progress[sub.id]) {
+          block.actual_end = D(progress[sub.id]);
+          block.status = 'done';
+          currDate = addDays(block.actual_end, 1);
+      } else {
+          block.target_end = addDays(currDate, sub.base - 1);
+          block.max_end = addDays(block.target_end, sub.buf);
+          
+          if (!schedule.some(s => s.status === 'active')) {
+              block.status = 'active';
+              currDate = addDays(block.target_end, 1);
+          } else {
+              block.status = 'locked';
+              currDate = addDays(block.target_end, 1);
+          }
+      }
+      schedule.push(block);
+  });
+  return { schedule, progress };
 }
 
-// --- GAMIFIED PLAN DATA ---
-const GAME_LEVELS = [
-  { id: 0, phase: 1, title: 'General Study — Day 1', subtitle: 'Thursday 27 March', icon: '📚' },
-  { id: 1, phase: 1, title: 'General Study — Day 2', subtitle: 'Saturday 29 March', icon: '📚' },
-  { id: 2, phase: 1, title: 'General Study — Day 3', subtitle: 'Sunday 30 March', icon: '📚' },
-  { id: 3, phase: 1, title: 'General Study — Day 4', subtitle: 'Monday 31 March', icon: '📚' },
-  { id: 4, phase: 1, title: 'General Study — Day 5', subtitle: 'Tuesday 1 April', icon: '📚' },
-  { id: 5, phase: 2, title: 'Physics', subtitle: 'Exam: 2 July • Thursday<br>Review: 2 Apr → 13 Apr (10 days)', icon: '🔭' },
-  { id: 6, phase: 2, title: 'English', subtitle: 'Exam: 28 June • Sunday<br>Review: 14 Apr → 18 Apr (5 days)', icon: '🔤' },
-  { id: 7, phase: 2, title: 'Chemistry', subtitle: 'Exam: 25 June • Thursday<br>Review: 19 Apr → 29 Apr (11 days)', icon: '⚗️' },
-  { id: 8, phase: 2, title: 'Arabic', subtitle: 'Exam: 21 June • Sunday<br>Review: 30 Apr → 6 May (7 days)', icon: '✍️' },
-  { id: 9, phase: 2, title: 'Math', subtitle: 'Exam: 18 June • Thursday<br>Review: 7 May → 18 May (12 days)', icon: '📐' },
-  { id: 10, phase: 2, title: 'Kurdish', subtitle: 'Exam: 14 June • Sunday<br>Review: 19 May → 24 May (6 days)', icon: '📖' },
-  { id: 11, phase: 2, title: 'Biology', subtitle: 'Exam: 11 June • Thursday<br>Review: 25 May → 10 June (17 days)', icon: '🧬' }
-];
+function getTodayBlock() {
+  const td = TODAY();
+  const tTime = td.getTime();
+  
+  // Check Phase 1
+  for (let p of P1_CONFIG) {
+    if (D(p.date).getTime() === tTime) return { phase: 1, s: 'General', icon: '📚', label: p.title, color: 'var(--accent-light)' };
+  }
+  if (tTime < D('2026-03-27').getTime()) return { phase: 0, s: 'Not started yet', icon: '⏳', color: 'var(--accent-light)' };
 
+  // Generate dynamic Phase 2
+  let { schedule } = generateSchedule();
+  let activeSub = schedule.find(s => s.status === 'active');
+  
+  if (activeSub) {
+    let msg = `Target: Finish by ${fmt(activeSub.target_end)}`;
+    if (tTime > activeSub.target_end.getTime()) msg = `Take your time Lare Gyan, using a buffer day!`;
+    return { phase: 2, ...activeSub, detailMsg: msg };
+  }
+  
+  return { phase: 4, s: 'Exam Season!', icon: '🎉', detailMsg: 'You survived!', color: '#cca969' };
+}
+
+
+// --- UI BUILDERS ---
 function buildPlanGame() {
   const container = document.getElementById('plan-container');
-  let savedProgress = JSON.parse(localStorage.getItem('gameProgress') || '[]');
-  
+  let { schedule, progress } = generateSchedule();
   let html = `<div class="plan-phase-title">📌 PHASE 1 — GENERAL STUDY · 27 MAR — 1 APR</div>`;
-  let phase2HeaderAdded = false;
 
-  GAME_LEVELS.forEach((level, index) => {
-    if (level.phase === 2 && !phase2HeaderAdded) {
-      html += `<div class="plan-phase-title gold">📌 PHASE 2 — REVIEW (FURTHEST → CLOSEST) · APR-JUN</div>`;
-      phase2HeaderAdded = true;
-    }
-
-    let isUnlocked = (index === 0) || savedProgress.includes(index - 1);
-    let isDone = savedProgress.includes(index);
-
+  // Render Phase 1
+  P1_CONFIG.forEach((level, index) => {
+    let isUnlocked = (index === 0) || !!progress[index - 1];
+    let isDone = !!progress[index];
     let cardClass = isUnlocked ? "" : "locked";
-    let statusHTML = "";
-    let lockHTML = "";
+    let statusHTML = isDone ? `<div class="level-status">✔ Done</div>` : (!isUnlocked ? `<div class="locked-overlay">🔒</div>` : `<div class="level-status" style="background:#e2e8f0; color:#4a5568;">Tap to complete</div>`);
 
-    if (isDone) {
-      statusHTML = `<div class="level-status">✔ Done</div>`;
-    } else if (!isUnlocked) {
-      lockHTML = `<div class="locked-overlay">🔒</div>`;
+    html += `<div class="level-card ${cardClass}" onclick="toggleGameLevel(${index}, ${isUnlocked})">
+      <div class="level-icon">📚</div>
+      <div class="level-info">
+        <div class="level-title">${level.title}</div>
+        <div class="level-meta">${fmt(D(level.date))}</div>
+        ${statusHTML}
+      </div>
+    </div>`;
+  });
+
+  html += `<div class="plan-phase-title gold">📌 PHASE 2 — REVIEW (FURTHEST → CLOSEST)</div>`;
+
+  // Render Dynamic Phase 2
+  schedule.forEach((sub) => {
+    let isUnlocked = sub.status === 'active' || sub.status === 'done';
+    let cardClass = isUnlocked ? "" : "locked";
+    
+    let subMeta = `Exam: ${fmt(D(sub.exam))}<br>`;
+    
+    if (sub.status === 'done') {
+      subMeta += `Completed in ${Math.round((sub.actual_end - sub.start)/(1000*60*60*24))+1} days!`;
+    } else if (sub.status === 'active') {
+      let daysOver = Math.round((TODAY() - sub.target_end)/(1000*60*60*24));
+      if (daysOver > 0) {
+        subMeta += `Review: ${fmt(sub.start)} → ${fmt(sub.target_end)} <span class="buffer-text">Extended for you (+${daysOver} buffer)</span>`;
+      } else {
+        subMeta += `Review: ${fmt(sub.start)} → ${fmt(sub.target_end)} (${sub.base} days)`;
+      }
     } else {
-      statusHTML = `<div class="level-status" style="background:#e2e8f0; color:#4a5568;">Tap to complete</div>`;
+      subMeta += `Planned: ${fmt(sub.start)} → ${fmt(sub.target_end)}`;
     }
 
-    html += `
-      <div class="level-card ${cardClass}" onclick="toggleGameLevel(${index}, ${isUnlocked})">
-        <div class="level-icon">${level.icon}</div>
-        <div class="level-info">
-          <div class="level-title">${level.title}</div>
-          <div class="level-meta">${level.subtitle}</div>
-          ${statusHTML}
-        </div>
-        ${lockHTML}
+    let statusHTML = sub.status === 'done' ? `<div class="level-status">✔ Done</div>` : (!isUnlocked ? `<div class="locked-overlay">🔒</div>` : `<div class="level-status" style="background:#e2e8f0; color:#4a5568;">Tap to complete</div>`);
+
+    html += `<div class="level-card ${cardClass}" onclick="toggleGameLevel(${sub.id}, ${isUnlocked})">
+      <div class="level-icon" style="background:${sub.color}33;">${sub.icon}</div>
+      <div class="level-info">
+        <div class="level-title">${sub.s}</div>
+        <div class="level-meta">${subMeta}</div>
+        ${statusHTML}
       </div>
-    `;
+    </div>`;
   });
 
   container.innerHTML = html;
 }
 
-window.toggleGameLevel = function(index, isUnlocked) {
+window.toggleGameLevel = function(id, isUnlocked) {
   if (!isUnlocked) {
     alert("🔒 Lare Gyan, you have to complete the previous level first to unlock this one!");
     return;
   }
-  let savedProgress = JSON.parse(localStorage.getItem('gameProgress') || '[]');
-  if (savedProgress.includes(index)) {
-    savedProgress = savedProgress.filter(i => i < index);
+  let progress = JSON.parse(localStorage.getItem('gameProgressObj') || '{}');
+  
+  if (progress[id]) {
+    // Uncheck this and everything after it
+    Object.keys(progress).forEach(k => { if (parseInt(k) >= id) delete progress[k]; });
   } else {
-    savedProgress.push(index);
-    if(index === 4) alert("🎉 YOU FINISHED PHASE 1 LARE GYAN! Phase 2 is now unlocked. You are amazing!");
+    progress[id] = TODAY().toISOString().slice(0,10);
+    if(id === 4) alert("🎉 YOU FINISHED PHASE 1 LARE GYAN! Phase 2 is now unlocked. You are amazing!");
+    if(id > 4) alert("🌟 Brilliant work Lare Gyan! You finished this subject. Take a deep breath, the next one is shifting earlier to give you more time!");
   }
-  localStorage.setItem('gameProgress', JSON.stringify(savedProgress));
+  
+  localStorage.setItem('gameProgressObj', JSON.stringify(progress));
+  buildToday(); 
   buildPlanGame(); 
+  buildChecklist();
 };
 
 
-// --- BUILD OTHER VIEWS ---
 function buildToday() {
   const td = TODAY();
   document.getElementById('today-date').textContent = td.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
-  const block = getTodayBlock(td);
+  const block = getTodayBlock();
   
   const mTasks = MORNING_TASKS[block.s] || MORNING_TASKS['General'];
   const aTasks = AFTERNOON_TASKS[block.s] || AFTERNOON_TASKS['General'];
   
-  document.getElementById('today-icon').textContent = block.icon || '📚';
-  document.getElementById('today-icon').style.background = block.color || 'var(--accent-light)';
-  document.getElementById('today-name').textContent = block.phase === 1 ? 'Phase 1: Bootcamp' : 'Focus: ' + block.s;
-  document.getElementById('today-detail').textContent = block.phase === 2 ? 'Master Level' : (block.phase === 4 ? 'You made it!' : 'Let\'s go!');
+  document.getElementById('today-icon').textContent = block.icon;
+  document.getElementById('today-icon').style.background = block.color;
+  document.getElementById('today-name').textContent = block.phase === 1 ? 'Phase 1: Bootcamp' : (block.phase === 2 ? `Focus: ${block.s}` : block.s);
+  document.getElementById('today-detail').innerHTML = block.detailMsg || (block.phase === 1 ? 'Let\'s go!' : '');
   
   document.getElementById('sessions').innerHTML=`
     <div class="session"><div class="session-label">☀️ Morning Session</div>
@@ -412,18 +481,14 @@ function buildToday() {
 }
 
 function buildProgress() {
-  const startDate = new Date('2026-03-27').getTime();
-  const endDate = new Date('2026-07-02').getTime(); // Physics Exam
+  const startDate = D('2026-03-27').getTime();
+  const endDate = D('2026-07-02').getTime();
   const today = TODAY().getTime();
 
   let percent = 0;
-  if (today >= endDate) {
-    percent = 100;
-  } else if (today > startDate) {
-    percent = Math.round(((today - startDate) / (endDate - startDate)) * 100);
-  }
+  if (today >= endDate) percent = 100;
+  else if (today > startDate) percent = Math.round(((today - startDate) / (endDate - startDate)) * 100);
 
-  // Slight delay for the satisfying load animation
   setTimeout(() => {
     document.getElementById('progress-fill').style.width = percent + '%';
     document.getElementById('progress-text').textContent = percent + '% done';
@@ -431,10 +496,9 @@ function buildProgress() {
 }
 
 function buildChecklist() {
-  const td=TODAY();
-  const block = getTodayBlock(td);
-  const dateKey='chk_'+td.toISOString().slice(0,10);
-  const stored=JSON.parse(localStorage.getItem(dateKey)||'{}');
+  const block = getTodayBlock();
+  const dateKey = 'chk_' + TODAY().toISOString().slice(0,10);
+  const stored = JSON.parse(localStorage.getItem(dateKey)||'{}');
 
   const mTasks = MORNING_TASKS[block.s] || MORNING_TASKS['General'];
   const aTasks = AFTERNOON_TASKS[block.s] || AFTERNOON_TASKS['General'];
@@ -484,11 +548,9 @@ function toggleTimer() {
     clearInterval(timerInterval);
     document.getElementById('start-btn').innerText = "Resume";
   } else {
-    // A tiny trick to unlock the audio so the phone allows it to play later automatically
     if (timeLeft === studyMins * 60 && currentMode === 'study') {
-        breakAudio.play().then(() => breakAudio.pause()).catch(e => console.log("Audio unlock issue: ", e));
+        breakAudio.play().then(() => breakAudio.pause()).catch(e => console.log(e));
     }
-    
     document.getElementById('start-btn').innerText = "Pause";
     timerInterval = setInterval(() => {
       timeLeft--;
@@ -500,20 +562,15 @@ function toggleTimer() {
           let mins = parseInt(localStorage.getItem('focusMins') || '0') + studyMins;
           localStorage.setItem('focusMins', mins);
           updateStats();
-          
           alert(`Time is up Lare Gyan! Amazing focus. Close your eyes, rest your mind, and listen to the recitation for your ${breakMins} min break.`);
-          
           currentMode = 'break';
           timeLeft = breakMins * 60;
-          breakAudio.play(); // Auto-play soothing recitation
-          
+          breakAudio.play();
         } else {
           alert("Break is over Lare Gyan! Ready to focus and conquer again?");
-          
           currentMode = 'study';
           timeLeft = studyMins * 60;
-          breakAudio.pause(); // Stop recitation
-          breakAudio.currentTime = 0;
+          breakAudio.pause(); breakAudio.currentTime = 0;
         }
         
         document.getElementById('timer-label').innerText = currentMode === 'study' ? "Study Time" : "Break Time";
@@ -535,19 +592,15 @@ function resetTimer() {
   document.getElementById('start-btn').innerText = "Start Focus";
   document.getElementById('timer-label').innerText = "Study Time";
   document.getElementById('timer-ui').style.borderColor = "var(--accent)";
-  
   const breakAudio = document.getElementById('break-audio');
-  breakAudio.pause();
-  breakAudio.currentTime = 0;
-  
+  breakAudio.pause(); breakAudio.currentTime = 0;
   updateTimerDisplay();
 }
 
-// --- ACTIVITY DASHBOARD LOGIC ---
+// --- DASHBOARD & ROUTING ---
 function updateStats() {
   let totalTasks = 0;
   let uniqueDays = new Set();
-  
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
     if (key.startsWith('chk_')) {
@@ -556,9 +609,7 @@ function updateStats() {
       for (let task in dayData) { if (dayData[task]) totalTasks++; }
     }
   }
-
-  const focusMins = localStorage.getItem('focusMins') || '0';
-  document.getElementById('stat-focus').innerText = focusMins;
+  document.getElementById('stat-focus').innerText = localStorage.getItem('focusMins') || '0';
   document.getElementById('stat-tasks').innerText = totalTasks;
   document.getElementById('stat-days').innerText = uniqueDays.size;
 }
