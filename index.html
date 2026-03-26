@@ -277,15 +277,15 @@ const P1_CONFIG = [
   { id: 4, title: 'General Study — Boss Level!', date: '2026-04-01' }
 ];
 
-// Phase 2 (Dynamic with Hidden Buffers - Exact setup requested)
+// Phase 2 (Dynamic with Hidden Buffers - Exact Order and Exact Math)
 const P2_SUBJECTS = [
-  { id: 5, s: 'Math',      icon: '📐', base: 9,  buf: 2, color: '#8caebd', exam: '2026-06-18' },
-  { id: 6, s: 'English',   icon: '🔤', base: 5,  buf: 1, color: '#d68a9d', exam: '2026-06-28' },
-  { id: 7, s: 'Chemistry', icon: '⚗️', base: 9,  buf: 2, color: '#a3b899', exam: '2026-06-25' },
+  { id: 5, s: 'Math',      icon: '📐', base: 11, buf: 2, color: '#8caebd', exam: '2026-06-18' },
+  { id: 6, s: 'English',   icon: '🔤', base: 5,  buf: 2, color: '#d68a9d', exam: '2026-06-28' },
+  { id: 7, s: 'Chemistry', icon: '⚗️', base: 9,  buf: 1, color: '#a3b899', exam: '2026-06-25' },
   { id: 8, s: 'Arabic',    icon: '✍️', base: 6,  buf: 1, color: '#e6afbc', exam: '2026-06-21' },
-  { id: 9, s: 'Physics',   icon: '🔭', base: 10, buf: 2, color: '#8caebd', exam: '2026-07-02' },
-  { id: 10, s:'Kurdish',   icon: '📖', base: 4,  buf: 2, color: '#d68a9d', exam: '2026-06-14' },
-  { id: 11, s:'Biology',   icon: '🧬', base: 15, buf: 2, color: '#a3b899', exam: '2026-06-11' }
+  { id: 9, s: 'Physics',   icon: '🔭', base: 11, buf: 2, color: '#8caebd', exam: '2026-07-02' },
+  { id: 10, s:'Kurdish',   icon: '📖', base: 5,  buf: 2, color: '#d68a9d', exam: '2026-06-14' },
+  { id: 11, s:'Biology',   icon: '🧬', base: 12, buf: 2, color: '#a3b899', exam: '2026-06-11' }
 ];
 
 const MORNING_TASKS = {
@@ -295,7 +295,7 @@ const MORNING_TASKS = {
   'Chemistry': [['9:00','Review equations and moles ⚗️'],['10:30','Memorize organic reactions 🧪']],
   'Arabic': [['9:00','Review grammar rules (Nahw/Sarf) ✍️'],['10:30','Read literature texts 📜']],
   'Physics': [['9:00','Review formulas and derivations 🔭'],['10:30','Read conceptual theory notes 💡']],
-  'Kurdish': [['9:00','Literature and poetry review 📖'],['10:30','Grammar and syntax practice 🗣️']],
+  'Kurdish': [['9:00','Study Adab: 3 pages & answer questions 📖'],['10:30','Grammar and syntax practice 🗣️']],
   'Biology': [['9:00','Read textbook chapter & take notes 🧬'],['10:30','Active recall / flashcards 🧠']]
 };
 
@@ -398,7 +398,7 @@ function buildPlanGame() {
     </div>`;
   });
 
-  html += `<div class="plan-phase-title gold">📌 PHASE 2 — REVIEW (FURTHEST → CLOSEST)</div>`;
+  html += `<div class="plan-phase-title gold">📌 PHASE 2 — REVIEW (IN ORDER)</div>`;
 
   // Render Dynamic Phase 2
   schedule.forEach((sub) => {
