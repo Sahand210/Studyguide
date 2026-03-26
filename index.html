@@ -3,91 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Study Journey 💙</title>
+<title>Your Study Journey 🌸</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-main: #f0f4f8;        /* Very pale cool blue background */
-    --bg-element: #d9e2ec;     /* Lighter blue for borders/elements */
-    --accent: #102a43;         /* Deep Navy Blue */
-    --accent-light: #243b53;   /* Lighter Navy */
-    --accent-bright: #334e68;  /* Medium Blue */
-    --text-head: #031024;      /* Near Black Navy for headings */
-    --text-body: #243b53;      /* Dark Navy text */
-    --text-muted: #627d98;     /* Cool Gray-Blue text */
+    --bg-main: #fcfdfe;        
+    --bg-element: #f0f4f8;     
+    --accent: #d68a9d;         /* Dusty Rose Pink */
+    --accent-light: #f4bdc9;   /* Soft Pink */
+    --accent-blue: #8caebd;    /* Soft Blue */
+    --text-head: #2a3b4c;      /* Deep Slate */
+    --text-body: #4a5d73;      
+    --text-muted: #829ab1;     
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family:'DM Sans',sans-serif; background:var(--bg-main); color:var(--text-body); min-height:100vh; padding-bottom:82px; }
 
   /* HERO & BASICS */
-  .hero { background:linear-gradient(135deg,#0a1f33 0%,#102a43 50%,#183a66 100%); padding:48px 24px 60px; text-align:center; position:relative; overflow:hidden; }
-  .hero-badge { display:inline-block; background:rgba(217,226,236,.2); border:1px solid rgba(217,226,236,.4); color:var(--bg-element); font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:6px 16px; border-radius:20px; margin-bottom:18px; }
-  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(26px,7vw,44px); color:#fdf6ec; line-height:1.2; margin-bottom:10px; }
-  .hero h1 em { color:#fdf6ec; font-style:italic; border-bottom: 2px solid #54728c;}
-  .hero p { color:rgba(240,244,248,.7); font-size:13px; font-weight:300; }
+  .hero { background:linear-gradient(135deg, #e6afbc 0%, #d68a9d 50%, #bda4b8 100%); padding:48px 24px 60px; text-align:center; position:relative; overflow:hidden; }
+  .hero-badge { display:inline-block; background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.4); color:white; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:6px 16px; border-radius:20px; margin-bottom:18px; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(26px,7vw,44px); color:white; line-height:1.2; margin-bottom:10px; }
+  .hero h1 em { color:#fdf2f5; font-style:italic; border-bottom: 2px solid rgba(255,255,255,0.5);}
+  .hero p { color:rgba(255,255,255,.9); font-size:13px; font-weight:400; }
   
   .sec { max-width:480px; margin:20px auto 0; padding:0 20px; }
-  .card { background:white; border-radius:16px; padding:20px; box-shadow:0 4px 20px rgba(16,42,67,.06); border:1px solid rgba(16,42,67,.05); }
-  .card.hi { border:2px solid var(--accent); box-shadow:0 6px 28px rgba(16,42,67,.12); }
+  .card { background:white; border-radius:16px; padding:20px; box-shadow:0 8px 24px rgba(214,138,157,.08); border:1px solid rgba(214,138,157,.1); }
+  .card.hi { border:2px solid var(--accent); box-shadow:0 8px 28px rgba(214,138,157,.15); }
   .lbl { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px; }
   .sec-title { font-family:'Playfair Display',serif; font-size:19px; color:var(--text-head); margin-bottom:14px; font-weight:700;}
 
   /* TODAY PULL */
   .pull { max-width:480px; margin:-28px auto 0; padding:0 20px; position:relative; z-index:10; }
   .subj-row { display:flex; align-items:center; gap:14px; border-radius:14px; padding:14px; margin-bottom:12px; }
-  .subj-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
+  .subj-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; background:var(--accent-light); color:white;}
   .subj-name { font-family:'Playfair Display',serif; font-size:18px; color:var(--text-head); font-weight:700; }
   .subj-detail { font-size:12px; color:var(--text-muted); margin-top:2px; }
-  .msg { font-size:13px; color:var(--text-muted); font-style:italic; line-height:1.7; border-left:3px solid var(--accent-bright); padding-left:12px; }
-  .alert { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,#183a66,#486581); color:white; font-size:11px; font-weight:600; padding:5px 12px; border-radius:20px; margin-bottom:10px; }
-  
-  /* GAMIFIED PROGRESS & LOCKS */
-  .prog-wrap { background:var(--bg-element); border-radius:10px; height:10px; overflow:hidden; margin:10px 0 6px; }
-  .prog-fill { height:100%; border-radius:10px; background:linear-gradient(90deg,var(--accent),#486581); transition:width 1.2s ease; }
-  .prog-stats { display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); }
-  .locked-level { filter: grayscale(100%); opacity: 0.6; pointer-events: none; }
-  .locked-badge { background: #555 !important; color: white !important; }
+
+  /* QURAN PLAYER */
+  .quran-card { background:linear-gradient(135deg, #f8f9fa, #f0f4f8); border-left: 4px solid var(--accent-blue); }
+  .quran-card audio { width: 100%; height: 36px; margin-top: 10px; outline: none; }
 
   /* TASKS & SESSIONS */
-  .session { background:#f0f4f8; border-radius:12px; padding:14px; margin-bottom:10px; border: 1px solid rgba(16,42,67,.05);}
-  .session-label { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent-light); margin-bottom:8px; }
-  .task { display:flex; align-items:flex-start; gap:12px; padding:11px 0; border-bottom:1px solid rgba(16,42,67,.1); }
+  .session { background:#fdfcfc; border-radius:12px; padding:14px; margin-bottom:10px; border: 1px solid rgba(214,138,157,.1);}
+  .session-label { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+  .task { display:flex; align-items:flex-start; gap:12px; padding:11px 0; border-bottom:1px solid rgba(214,138,157,.05); }
   .task:last-child { border-bottom:none; }
-  .task-time { font-size:11px; font-weight:700; color:var(--accent-bright); min-width:52px; margin-top:2px; }
+  .task-time { font-size:11px; font-weight:700; color:var(--accent-blue); min-width:52px; margin-top:2px; }
   .task-info { flex:1; }
-  .task-text { font-size:13px; color:var(--text-body); line-height:1.5; font-weight:500;}
-
-  /* TIMELINE MAP */
-  .tl { position:relative; }
-  .tl::before { content:''; position:absolute; left:20px; top:0; bottom:0; width:4px; background:linear-gradient(to bottom,var(--accent),var(--bg-element)); border-radius:4px;}
-  .tl-item { display:flex; gap:16px; margin-bottom:14px; }
-  .tl-dot { width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; z-index:1; border:4px solid var(--bg-main); box-shadow:0 2px 8px rgba(16,42,67,.08); }
-  .tl-body { flex:1; background:white; border-radius:14px; padding:13px 15px; border:2px solid transparent; box-shadow:0 2px 10px rgba(16,42,67,.04); }
-  .tl-body.active { border-color:var(--accent); box-shadow:0 4px 18px rgba(16,42,67,.1); }
-  .tl-body.done { opacity:0.8; background:#f0f4f8; border-color:#d9e2ec;}
-  .tl-subj { font-weight:700; font-size:15px; color:var(--text-head); }
-  .tl-meta { font-size:12px; color:var(--text-muted); margin-top:2px; }
-  .badge { display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; margin-top:5px; }
+  .task-text { font-size:13px; color:var(--text-head); line-height:1.5; font-weight:500;}
 
   /* INTERACTIVE CHECKLIST */
-  .chk { display:flex; align-items:center; gap:12px; background:white; border-radius:12px; padding:15px; margin-bottom:10px; box-shadow:0 2px 8px rgba(16,42,67,.04); border: 2px solid transparent; cursor:pointer; transition:all .2s; }
-  .chk.done { opacity:0.6; background:#f0f4f8; border-color: transparent; }
-  .chk-box { width:26px; height:26px; border-radius:8px; border:2px solid var(--accent-bright); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .2s;}
+  .chk { display:flex; align-items:center; gap:12px; background:white; border-radius:12px; padding:15px; margin-bottom:10px; box-shadow:0 2px 8px rgba(0,0,0,.02); border: 2px solid transparent; cursor:pointer; transition:all .2s; }
+  .chk.done { opacity:0.6; background:#f9f9f9; border-color: transparent; }
+  .chk-box { width:26px; height:26px; border-radius:8px; border:2px solid var(--accent-blue); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .2s;}
   .chk.done .chk-box { background:var(--accent); border-color:var(--accent); }
-  .chk-lbl { font-size:14px; font-weight: 500; color:var(--text-body); transition:all .2s;}
+  .chk-lbl { font-size:14px; font-weight: 500; color:var(--text-head); transition:all .2s;}
   .chk.done .chk-lbl { text-decoration:line-through; color:var(--text-muted); }
 
-  /* OVERWHELM & QUOTES */
-  .quote-card { background:linear-gradient(135deg,#0a1f33,#183a66); border-radius:20px; padding:28px 24px; text-align:center; position:relative; overflow:hidden; }
-  .quote-text { font-family:'Playfair Display',serif; font-size:16px; color:#fdf6ec; line-height:1.7; position:relative; z-index:2;}
-  .sos-btn { width:100%; padding:16px; background:rgba(16,42,67,0.03); border:2px dashed var(--bg-element); border-radius:16px; color:var(--accent-bright); font-weight:700; font-size:14px; cursor:pointer; margin-top:10px; transition: background 0.2s;}
-  .sos-btn:active { background:rgba(16,42,67,0.08); }
+  /* POMODORO TIMER */
+  .timer-wrap { text-align:center; padding: 20px 0; }
+  .timer-circle { width:220px; height:220px; border-radius:50%; border:8px solid var(--accent); display:flex; align-items:center; justify-content:center; flex-direction:column; margin:0 auto; background:white; box-shadow:0 10px 30px rgba(214,138,157,.15); transition: border-color 0.3s;}
+  .timer-time { font-family:'DM Sans', monospace; font-size:54px; font-weight:700; color:var(--accent); line-height:1; letter-spacing:-1px;}
+  .timer-mode { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--text-muted); margin-bottom:5px;}
+  
+  .duration-picker { display:flex; justify-content:center; gap:8px; margin-bottom: 24px; background: #f0f4f8; padding: 6px; border-radius: 30px; display: inline-flex;}
+  .dur-btn { background:transparent; border:none; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; color:var(--text-muted); cursor: pointer; transition: 0.2s;}
+  .dur-btn.active { background: white; color: var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,0.05);}
+
+  .btn-group { display:flex; justify-content:center; gap:12px; margin-top:24px; }
+  .btn { padding:14px 28px; border-radius:30px; border:none; font-size:14px; font-weight:700; cursor:pointer; transition:all 0.2s; }
+  .btn-primary { background:var(--accent); color:white; box-shadow:0 4px 12px rgba(214,138,157,.3); }
+  .btn-primary:active { transform: translateY(2px); box-shadow:0 2px 6px rgba(214,138,157,.3); }
+  .btn-secondary { background:var(--bg-element); color:var(--text-body); }
+  
+  .phone-warning { background: #fff0f3; color: #d6336c; font-size: 13px; font-weight: 600; padding: 12px; border-radius: 12px; display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; border: 1px dashed #ffb3c6;}
+
+  /* BIG CALENDAR */
+  .cal-month-title { font-family:'Playfair Display',serif; font-size:22px; color:var(--text-head); margin: 24px 0 10px; font-weight: 700; text-align:center;}
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; background: white; padding: 16px; border-radius: 16px; box-shadow:0 4px 20px rgba(0,0,0,.04); border:1px solid rgba(0,0,0,.03);}
+  .cal-day-name { font-size: 10px; font-weight: 700; color: var(--text-muted); text-align: center; text-transform: uppercase; margin-bottom: 8px;}
+  .cal-cell { aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--text-body); background: #f8f9fa; position: relative; flex-direction: column;}
+  .cal-cell.empty { background: transparent; }
+  .cal-cell.has-block { color: white; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);}
+  .cal-cell .exam-icon { font-size: 14px; position: absolute; top: -6px; right: -6px; background: white; border-radius: 50%; padding: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 2;}
+
+  /* STATS DASHBOARD */
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;}
+  .stat-card { background:white; padding:24px 20px; border-radius:16px; text-align:center; box-shadow:0 4px 20px rgba(214,138,157,.06); border:1px solid rgba(214,138,157,.1); }
+  .stat-num { font-family:'Playfair Display',serif; font-size:38px; color:var(--accent); font-weight:700; margin-bottom:4px; line-height:1;}
+  .stat-lbl { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); }
 
   /* NAV */
-  .nav { position:fixed; bottom:0; left:0; right:0; background:white; border-top:1px solid rgba(16,42,67,.06); display:flex; justify-content:space-around; padding:10px 0 20px; z-index:100; box-shadow: 0 -4px 20px rgba(16,42,67,0.03);}
-  .nb { display:flex; flex-direction:column; align-items:center; gap:4px; font-size:11px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:.5px; background:none; border:none; padding:4px 16px; }
+  .nav { position:fixed; bottom:0; left:0; right:0; background:white; border-top:1px solid rgba(0,0,0,.04); display:flex; justify-content:space-around; padding:10px 0 20px; z-index:100; box-shadow: 0 -4px 24px rgba(0,0,0,0.03);}
+  .nb { display:flex; flex-direction:column; align-items:center; gap:4px; font-size:10px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:.5px; background:none; border:none; padding:4px 8px; }
   .nb.active { color:var(--accent); }
-  .nb-icon { font-size:22px; }
+  .nb-icon { font-size:20px; }
   .page { display:none; animation: fadeIn 0.3s ease; }
   .page.active { display:block; }
   @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
@@ -97,34 +107,35 @@
 
 <nav class="nav">
   <button class="nb active" onclick="showPage('today',this)"><span class="nb-icon">🌸</span>Today</button>
-  <button class="nb" onclick="showPage('schedule',this)"><span class="nb-icon">🗺️</span>Map</button>
+  <button class="nb" onclick="showPage('timer',this)"><span class="nb-icon">⏱️</span>Timer</button>
   <button class="nb" onclick="showPage('checklist',this)"><span class="nb-icon">✅</span>Tasks</button>
+  <button class="nb" onclick="showPage('calendar',this)"><span class="nb-icon">🗓️</span>Calendar</button>
+  <button class="nb" onclick="showPage('stats',this)"><span class="nb-icon">📊</span>Activity</button>
 </nav>
 
 <div id="page-today" class="page active">
   <div class="hero">
     <div class="hero-badge">📚 Level up your mind</div>
-    <h1>Bismillah,<br><em>let's begin.</em> 💙</h1>
+    <h1>Bismillah,<br><em>let's begin.</em> 🌸</h1>
   </div>
 
   <div class="pull">
     <div class="card hi">
       <div class="lbl">Today is</div>
       <div style="font-family:'Playfair Display',serif;font-size:19px;color:var(--text-head);margin-bottom:14px; font-weight:bold;" id="today-date"></div>
-      <div id="today-alert"></div>
       <div class="subj-row" id="today-row">
         <div class="subj-icon" id="today-icon"></div>
         <div><div class="subj-name" id="today-name"></div><div class="subj-detail" id="today-detail"></div></div>
       </div>
-      <div class="msg" id="today-msg"></div>
     </div>
   </div>
 
   <div class="sec">
-    <div class="card">
-      <div class="lbl">🗓 Overall Progress</div>
-      <div class="prog-wrap"><div class="prog-fill" id="prog"></div></div>
-      <div class="prog-stats"><span>Start</span><span id="prog-pct" style="font-weight:bold; color:var(--accent);"></span><span>Finish Line</span></div>
+    <div class="card quran-card">
+      <div class="lbl">Heart & Mind 🕊️</div>
+      <p style="font-size: 13px; font-weight: 500; color: var(--text-head); margin-bottom: 4px;">Surah Ash-Sharh (The Relief)</p>
+      <p style="font-size: 11px; color: var(--text-muted); font-style: italic;">"For indeed, with hardship [will be] ease." Listen to fix your heart before you study.</p>
+      <audio controls src="https://server8.mp3quran.net/afs/094.mp3" preload="none"></audio>
     </div>
   </div>
 
@@ -132,25 +143,39 @@
     <div class="sec-title">📋 Today's Game Plan</div>
     <div id="sessions"></div>
   </div>
-
-  <div class="sec" style="margin-bottom:8px;">
-    <div class="quote-card">
-      <div class="quote-text" id="quote"></div>
-    </div>
-  </div>
-
-  <div class="sec" style="margin-top: 20px; padding-bottom: 30px;">
-    <button class="sos-btn" onclick="showPage('love', null)">🥺 Feeling overwhelmed?</button>
-  </div>
 </div>
 
-<div id="page-schedule" class="page">
+<div id="page-timer" class="page">
   <div class="hero" style="padding-bottom:32px;">
-    <div class="hero-badge">Level Map</div>
-    <h1>Your <em>Journey</em></h1>
-    <p>Unlock Phase 2 by completing Phase 1!</p>
+    <div class="hero-badge">Deep Work Zone</div>
+    <h1><em>Focus</em> Mode 🧠</h1>
+    <p>Train your mind. You can do this.</p>
   </div>
-  <div class="sec" style="margin-top:24px;margin-bottom:8px;" id="tl-container"></div>
+  <div class="sec" style="text-align: center;">
+    <div class="card" style="margin-top:20px;">
+      
+      <div class="duration-picker">
+        <button class="dur-btn active" id="btn-25" onclick="setTimerDuration(25, 5)">25m Study / 5m Break</button>
+        <button class="dur-btn" id="btn-50" onclick="setTimerDuration(50, 10)">50m Study / 10m Break</button>
+      </div>
+
+      <div class="timer-wrap">
+        <div class="timer-circle" id="timer-ui">
+          <div class="timer-mode" id="timer-label">Study Time</div>
+          <div class="timer-time" id="time-display">25:00</div>
+        </div>
+        
+        <div class="phone-warning">
+          <span>📵</span> Put your phone away, face down. Be present.
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="resetTimer()">Reset</button>
+          <button class="btn btn-primary" id="start-btn" onclick="toggleTimer()">Start Focus</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="page-checklist" class="page">
@@ -162,22 +187,37 @@
   <div class="sec" style="margin-top:24px;" id="checklist"></div>
 </div>
 
-<div id="page-love" class="page">
-  <div class="hero" style="padding-bottom:40px;">
-    <div class="hero-badge">💙 Breathe</div>
-    <h1>You are<br><em>extraordinary</em></h1>
+<div id="page-calendar" class="page">
+  <div class="hero" style="padding-bottom:32px;">
+    <div class="hero-badge">The Master Plan</div>
+    <h1>Your <em>Journey</em> 🗓️</h1>
+    <p>One day at a time. Trust the process.</p>
   </div>
-  <div class="sec" style="margin-top:24px;margin-bottom:8px;">
-    <div class="card" style="line-height:1.9;">
-      <div style="font-size:15px;color:var(--text-body); font-weight:500;">
-        I know these weeks feel heavy. The books, the topics, the pressure — it's a lot.<br><br>
-        But I know <em>you</em>. And the person who made it this far is more than capable of crossing this finish line. 🌟<br><br>
-        On the hard days — open this. Remember every page you read, every problem you work through — I see it, and I'm so proud of you.<br><br>
-        Take a deep breath. Say Alhamdulillah. Drink some water. And when you are ready, try again.<br><br>
-        <strong style="color:var(--accent);">I believe in you. Always. 💙</strong>
+  <div class="sec" style="margin-top:10px;margin-bottom:20px;" id="calendar-container">
+    </div>
+</div>
+
+<div id="page-stats" class="page">
+  <div class="hero" style="padding-bottom:32px;">
+    <div class="hero-badge">Dashboard</div>
+    <h1>Her <em>Activity</em> 📊</h1>
+    <p>Track your hard work and consistency.</p>
+  </div>
+  <div class="sec">
+    <div class="stat-grid">
+      <div class="stat-card" style="grid-column: 1 / -1;">
+        <div class="stat-num" id="stat-focus">0</div>
+        <div class="stat-lbl">Focus Minutes Logged</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-tasks">0</div>
+        <div class="stat-lbl">Tasks Done</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-days">0</div>
+        <div class="stat-lbl">Days Logged</div>
       </div>
     </div>
-    <button class="sos-btn" style="border:none; background:var(--accent); color:white; margin-top:20px;" onclick="showPage('today', document.querySelector('.nb.active'))">← Back to Today</button>
   </div>
 </div>
 
@@ -192,136 +232,82 @@ const PHASE1 = [
 ];
 
 const PHASE2_BLOCKS = [
-  { s:'Math',         icon:'📐', color:'#d9e2ec', exam:'2025-06-18', start:'2025-04-02', end:'2025-04-12', days:11 },
-  { s:'English',      icon:'🔤', color:'#e0eaf4', exam:'2025-06-28', start:'2025-04-13', end:'2025-04-18', days:6  },
-  { s:'Chemistry',    icon:'⚗️', color:'#d9e2ec', exam:'2025-06-25', start:'2025-04-19', end:'2025-04-29', days:11 },
-  { s:'Arabic & Ayn', icon:'✍️', color:'#e0eaf4', exam:'2025-06-21', start:'2025-04-30', end:'2025-05-06', days:7  },
-  { s:'Physics',      icon:'🔭', color:'#d9e2ec', exam:'2025-07-02', start:'2025-05-07', end:'2025-05-18', days:12 },
-  { s:'Kurdish',      icon:'📖', color:'#e0eaf4', exam:'2025-06-14', start:'2025-05-19', end:'2025-05-24', days:6  },
-  { s:'Biology',      icon:'🧬', color:'#d9e2ec', exam:'2025-06-11', start:'2025-05-25', end:'2025-06-10', days:17 },
+  { s:'Math',         icon:'📐', color:'#8caebd', exam:'2025-06-18', start:'2025-04-02', end:'2025-04-12' },
+  { s:'English',      icon:'🔤', color:'#d68a9d', exam:'2025-06-28', start:'2025-04-13', end:'2025-04-18' },
+  { s:'Chemistry',    icon:'⚗️', color:'#a3b899', exam:'2025-06-25', start:'2025-04-19', end:'2025-04-29' },
+  { s:'Arabic',       icon:'✍️', color:'#e6afbc', exam:'2025-06-21', start:'2025-04-30', end:'2025-05-06' },
+  { s:'Physics',      icon:'🔭', color:'#8caebd', exam:'2025-07-02', start:'2025-05-07', end:'2025-05-18' },
+  { s:'Kurdish',      icon:'📖', color:'#d68a9d', exam:'2025-06-14', start:'2025-05-19', end:'2025-05-24' },
+  { s:'Biology',      icon:'🧬', color:'#a3b899', exam:'2025-06-11', start:'2025-05-25', end:'2025-06-10' },
 ];
 
-const ISLAMIC_QUOTES = [
-  '"And that there is not for man except that [good] for which he strives." (Quran 53:39)',
-  '"Whoever takes a path upon which to obtain knowledge, Allah makes the path to Paradise easy for him." (Sahih Muslim)',
-  '"And say, \'My Lord, increase me in knowledge.\'" (Quran 20:114)',
-  '"Indeed, with hardship [will be] ease." (Quran 94:6)',
-  '"Allah does not burden a soul beyond that it can bear." (Quran 2:286)',
-  'Tawakkul is doing your absolute best and leaving the rest to Allah.',
-  'Every hour you study today is a gift to your future self. Bismillah.',
-  'Focus on today. Today is enough. You got this.'
-];
-
-// Tasks placeholders
 const MORNING_TASKS = {
-  'General': [['9:00','Read & summarize a passage 📖','Focus on understanding'],['10:30','Review flashcards 🗂','Active recall']],
-};
-const AFTERNOON_TASKS = {
-  'General': [['2:00','Practice Questions 📝','Test your knowledge'],['4:00','Organize notes for tomorrow 📋','Set yourself up for success']],
+  'General': [['9:00','Read & summarize a passage 📖'],['10:30','Review flashcards 🗂']],
+  'Math': [['9:00','Review key formulas & theorems 📐'],['10:30','Solve 15 practice problems 📝']],
+  'English': [['9:00','Vocabulary flashcards & review 🔤'],['10:30','Reading comprehension practice 📚']],
+  'Chemistry': [['9:00','Review equations and moles ⚗️'],['10:30','Memorize organic reactions 🧪']],
+  'Arabic': [['9:00','Review grammar rules (Nahw/Sarf) ✍️'],['10:30','Read literature texts 📜']],
+  'Physics': [['9:00','Review formulas and derivations 🔭'],['10:30','Read conceptual theory notes 💡']],
+  'Kurdish': [['9:00','Literature and poetry review 📖'],['10:30','Grammar and syntax practice 🗣️']],
+  'Biology': [['9:00','Read textbook chapter & take notes 🧬'],['10:30','Active recall / flashcards 🧠']]
 };
 
-// --- LOGIC ---
+const AFTERNOON_TASKS = {
+  'General': [['2:00','Practice Questions 📝'],['4:00','Organize notes for tomorrow 📋']],
+  'Math': [['2:00','Do 1 full Past Paper section ⏳'],['4:30','Review incorrect answers 🎯']],
+  'English': [['2:00','Grammar exercises ✍️'],['4:00','Write a practice essay 📝']],
+  'Chemistry': [['2:00','Practice Past Paper questions 📋'],['4:30','Review lab knowledge 🔬']],
+  'Arabic': [['2:00','Vocabulary memorization 🧠'],['4:00','Solve Past Paper questions ⏳']],
+  'Physics': [['2:00','Solve calculation problems 🧮'],['4:30','Past paper practice questions ⏳']],
+  'Kurdish': [['2:00','Writing and essay practice ✍️'],['4:00','Reading comprehension drills 📚']],
+  'Biology': [['2:00','Draw and label key diagrams 🖍️'],['4:30','Past paper MCQs and review ⏳']]
+};
+
 const D = s => { const d=new Date(s); d.setHours(0,0,0,0); return d; };
 const TODAY = () => { const d=new Date(); d.setHours(0,0,0,0); return d; };
 
-// Check if Phase 1 is fully checked off in LocalStorage
-function isPhase1Complete() {
-  let allDone = true;
-  PHASE1.forEach(p => {
-    const key = 'chk_' + D(p.date).toISOString().slice(0,10);
-    const stored = JSON.parse(localStorage.getItem(key) || '{}');
-    if (Object.keys(stored).length === 0) allDone = false;
-  });
-  return allDone; 
-}
-
 function getTodayBlock(td) {
-  for (let p of PHASE1) if (D(p.date).getTime()===td.getTime()) return { phase:1, label:p.label, s:'General' };
+  for (let p of PHASE1) if (D(p.date).getTime()===td.getTime()) return { phase:1, label:p.label, s:'General', icon:'📚' };
   for (let b of PHASE2_BLOCKS) if (td>=D(b.start) && td<=D(b.end)) return { phase:2, ...b };
-  if (td < D('2025-03-27')) return { phase:0, s:'Not started yet' };
-  return { phase:4, s:'Done!' };
+  if (td < D('2025-03-27')) return { phase:0, s:'Not started yet', icon:'⏳' };
+  return { phase:4, s:'Exam Season!', icon:'🎉' };
 }
 
+// --- BUILD VIEWS ---
 function buildToday() {
   const td = TODAY();
   document.getElementById('today-date').textContent = td.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
-  
   const block = getTodayBlock(td);
-  const mTasks = MORNING_TASKS['General'];
-  const aTasks = AFTERNOON_TASKS['General'];
+  
+  const mTasks = MORNING_TASKS[block.s] || MORNING_TASKS['General'];
+  const aTasks = AFTERNOON_TASKS[block.s] || AFTERNOON_TASKS['General'];
   
   document.getElementById('today-icon').textContent = block.icon || '📚';
-  document.getElementById('today-icon').style.background = '#d9e2ec';
-  document.getElementById('today-name').textContent = block.phase === 1 ? 'Phase 1: Training Ground' : 'Phase 2: Master Level';
-  document.getElementById('today-detail').textContent = block.s;
+  document.getElementById('today-icon').style.background = block.color || 'var(--accent-light)';
+  document.getElementById('today-name').textContent = block.phase === 1 ? 'Phase 1: Bootcamp' : 'Focus: ' + block.s;
+  document.getElementById('today-detail').textContent = block.phase === 2 ? 'Master Level' : 'Let\'s go!';
   
   document.getElementById('sessions').innerHTML=`
-    <div class="session">
-      <div class="session-label">☀️ Morning Session</div>
-      ${mTasks.map(([time,text,topic])=>`<div class="task"><div class="task-time">${time}</div><div class="task-info"><div class="task-text">${text}</div></div></div>`).join('')}
-    </div>
-    <div class="session">
-      <div class="session-label">🌙 Afternoon Session</div>
-      ${aTasks.map(([time,text,topic])=>`<div class="task"><div class="task-time">${time}</div><div class="task-info"><div class="task-text">${text}</div></div></div>`).join('')}
-    </div>`;
-
-  document.getElementById('quote').textContent = ISLAMIC_QUOTES[td.getDate() % ISLAMIC_QUOTES.length];
-  
-  // Progress bar logic
-  const start=D('2025-03-27'), end=D('2025-07-02');
-  const total=Math.round((end-start)/86400000);
-  const passed=Math.max(0,Math.min(total,Math.round((td-start)/86400000)));
-  const pct = Math.round(passed/total*100);
-  document.getElementById('prog').style.width = pct+'%'; 
-  document.getElementById('prog-pct').textContent = passed + ' days in';
-}
-
-function buildSchedule() {
-  const td = TODAY();
-  const container = document.getElementById('tl-container');
-  const unlocked = isPhase1Complete(); 
-  let html = '';
-
-  // Phase 1 Map
-  html += '<div style="font-weight:bold; color:var(--accent); margin-bottom:10px;">Phase 1: Bootcamp</div><div class="tl" style="margin-bottom:20px;">';
-  PHASE1.forEach((p,i)=>{
-    const d=D(p.date); const done=td>d; const active=td.getTime()===d.getTime();
-    html+=`<div class="tl-item">
-      <div class="tl-dot" style="background:#d9e2ec">⚔️</div>
-      <div class="tl-body ${active?'active':''} ${done?'done':''}">
-        <div class="tl-subj">${p.label}</div>
-        ${active?'<span class="badge" style="background:var(--accent);color:white">🎮 Playing Now</span>':''}
-      </div></div>`;
-  });
-  html += '</div>';
-
-  // Phase 2 Map (LOCKED if Phase 1 isn't done)
-  html += `<div style="font-weight:bold; color:var(--text-head); margin-bottom:10px;">Phase 2: Master Levels ${unlocked?'':'(🔒 Locked)'}</div><div class="tl">`;
-  PHASE2_BLOCKS.forEach((b,i)=>{
-    html+=`<div class="tl-item ${unlocked ? '' : 'locked-level'}">
-      <div class="tl-dot" style="background:${unlocked ? b.color : '#ccc'}">${unlocked ? b.icon : '🔒'}</div>
-      <div class="tl-body">
-        <div class="tl-subj">${b.s}</div>
-        <div class="tl-meta">${b.days} Days</div>
-        <span class="badge ${unlocked ? '' : 'locked-badge'}" style="background:#d9e2ec; color:var(--text-body);">${unlocked ? 'Unlocks ' + new Date(b.start).toLocaleDateString('en-GB',{day:'numeric', month:'short'}) : 'Complete Phase 1'}</span>
-      </div></div>`;
-  });
-  html += '</div>';
-  container.innerHTML = html;
+    <div class="session"><div class="session-label">☀️ Morning Session</div>
+      ${mTasks.map(([time,text])=>`<div class="task"><div class="task-time">${time}</div><div class="task-info"><div class="task-text">${text}</div></div></div>`).join('')}</div>
+    <div class="session"><div class="session-label">🌙 Afternoon Session</div>
+      ${aTasks.map(([time,text])=>`<div class="task"><div class="task-time">${time}</div><div class="task-info"><div class="task-text">${text}</div></div></div>`).join('')}</div>`;
 }
 
 function buildChecklist() {
   const td=TODAY();
+  const block = getTodayBlock(td);
   const dateKey='chk_'+td.toISOString().slice(0,10);
   const stored=JSON.parse(localStorage.getItem(dateKey)||'{}');
 
-  let tasks=['Read & summarize a passage','Review flashcards','Take a 30 min break','Practice Questions','Organize notes','Say Alhamdulillah & Sleep Early'];
+  const mTasks = MORNING_TASKS[block.s] || MORNING_TASKS['General'];
+  const aTasks = AFTERNOON_TASKS[block.s] || AFTERNOON_TASKS['General'];
+  let tasks = [...mTasks.map(t=>t[1]), ...aTasks.map(t=>t[1]), 'Say Alhamdulillah & Sleep Early 🌙'];
 
   document.getElementById('checklist').innerHTML=tasks.map((t,i)=>{
     const key='t'+i, c=stored[key]||false;
     return `<div class="chk ${c?'done':''}" onclick="toggleChk(this,'${key}','${dateKey}', ${tasks.length})">
-      <div class="chk-box">${c?'<span style="color:white;font-weight:bold;">✓</span>':''}</div>
-      <div class="chk-lbl">${t}</div></div>`;
+      <div class="chk-box">${c?'<span style="color:white;font-weight:bold;">✓</span>':''}</div><div class="chk-lbl">${t}</div></div>`;
   }).join('');
 }
 
@@ -329,21 +315,155 @@ function toggleChk(el,key,dateKey, totalTasks){
   el.classList.toggle('done');
   const c=el.classList.contains('done');
   el.querySelector('.chk-box').innerHTML=c?'<span style="color:white;font-weight:bold;">✓</span>':'';
-  
   const s=JSON.parse(localStorage.getItem(dateKey)||'{}');
-  s[key]=c; 
-  localStorage.setItem(dateKey,JSON.stringify(s));
+  s[key]=c; localStorage.setItem(dateKey,JSON.stringify(s));
+  updateStats();
+}
 
-  // Check if Level is Complete!
-  let completedTasks = 0;
-  for (let i=0; i<totalTasks; i++) { if (s['t'+i]) completedTasks++; }
+// --- BIG CALENDAR LOGIC ---
+function buildCalendar() {
+  const container = document.getElementById('calendar-container');
+  let html = '';
   
-  if (completedTasks === totalTasks) {
-    setTimeout(() => {
-      alert("💙 LEVEL COMPLETE! 💙\n\nAmazing job today. Rest well and prepare for the next challenge!");
-      buildSchedule(); // Re-render map to see if Phase 2 unlocked
-    }, 300);
+  // Months: April (3), May (4), June (5)
+  const months = [{ y:2025, m:3, name:'April' }, { y:2025, m:4, name:'May' }, { y:2025, m:5, name:'June' }];
+  
+  months.forEach(month => {
+    html += `<div class="cal-month-title">${month.name} 2025</div>`;
+    html += `<div class="cal-grid">
+      <div class="cal-day-name">Sun</div><div class="cal-day-name">Mon</div><div class="cal-day-name">Tue</div><div class="cal-day-name">Wed</div><div class="cal-day-name">Thu</div><div class="cal-day-name">Fri</div><div class="cal-day-name">Sat</div>`;
+    
+    const firstDay = new Date(month.y, month.m, 1).getDay();
+    const daysInMonth = new Date(month.y, month.m + 1, 0).getDate();
+    
+    // Empty cells for alignment
+    for (let i = 0; i < firstDay; i++) { html += `<div class="cal-cell empty"></div>`; }
+    
+    // Days
+    for (let d = 1; d <= daysInMonth; d++) {
+      const currentDate = new Date(month.y, month.m, d);
+      currentDate.setHours(0,0,0,0);
+      
+      let bg = '#f8f9fa';
+      let iconHTML = '';
+      let isBlock = false;
+
+      // Check Phase 2 Blocks
+      for (let b of PHASE2_BLOCKS) {
+        if (currentDate >= D(b.start) && currentDate <= D(b.end)) {
+          bg = b.color;
+          isBlock = true;
+        }
+        if (currentDate.getTime() === D(b.exam).getTime()) {
+          iconHTML = `<div class="exam-icon">📝</div>`;
+          bg = '#d6336c'; // Exam day red/pink
+          isBlock = true;
+        }
+      }
+
+      html += `<div class="cal-cell ${isBlock ? 'has-block' : ''}" style="background: ${bg};">${d}${iconHTML}</div>`;
+    }
+    html += `</div>`;
+  });
+
+  // Legend
+  html += `<div style="margin-top:20px; font-size:11px; text-align:center; color:var(--text-muted);">
+    <span style="display:inline-block; width:10px; height:10px; background:#8caebd; border-radius:50%; margin-right:4px;"></span> Math/Phys
+    <span style="display:inline-block; width:10px; height:10px; background:#d68a9d; border-radius:50%; margin:0 4px 0 10px;"></span> Eng/Kurd
+    <span style="display:inline-block; width:10px; height:10px; background:#a3b899; border-radius:50%; margin:0 4px 0 10px;"></span> Chem/Bio
+    <br><br>📝 = Exam Day!
+  </div>`;
+
+  container.innerHTML = html;
+}
+
+// --- POMODORO TIMER LOGIC ---
+let timerInterval;
+let studyMins = 25;
+let breakMins = 5;
+let timeLeft = 25 * 60; 
+let isRunning = false;
+let currentMode = 'study'; // 'study' or 'break'
+
+function setTimerDuration(sMins, bMins) {
+  studyMins = sMins; breakMins = bMins;
+  document.getElementById('btn-25').classList.toggle('active', sMins === 25);
+  document.getElementById('btn-50').classList.toggle('active', sMins === 50);
+  resetTimer();
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+  const s = (timeLeft % 60).toString().padStart(2, '0');
+  document.getElementById('time-display').innerText = `${m}:${s}`;
+}
+
+function toggleTimer() {
+  if (isRunning) {
+    clearInterval(timerInterval);
+    document.getElementById('start-btn').innerText = "Resume";
+  } else {
+    document.getElementById('start-btn').innerText = "Pause";
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      updateTimerDisplay();
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        
+        // Save focus time
+        if (currentMode === 'study') {
+          let mins = parseInt(localStorage.getItem('focusMins') || '0') + studyMins;
+          localStorage.setItem('focusMins', mins);
+          updateStats();
+          alert(`Time's up! Amazing focus. Put your phone back down and take a ${breakMins} min break.`);
+          currentMode = 'break';
+          timeLeft = breakMins * 60;
+        } else {
+          alert("Break is over! Ready to focus again?");
+          currentMode = 'study';
+          timeLeft = studyMins * 60;
+        }
+        
+        document.getElementById('timer-label').innerText = currentMode === 'study' ? "Study Time" : "Break Time";
+        document.getElementById('timer-ui').style.borderColor = currentMode === 'study' ? "var(--accent)" : "var(--accent-blue)";
+        document.getElementById('start-btn').innerText = "Start Focus";
+        updateTimerDisplay();
+        isRunning = false;
+      }
+    }, 1000);
   }
+  isRunning = !isRunning;
+}
+
+function resetTimer() { 
+  clearInterval(timerInterval);
+  isRunning = false;
+  currentMode = 'study';
+  timeLeft = studyMins * 60;
+  document.getElementById('start-btn').innerText = "Start Focus";
+  document.getElementById('timer-label').innerText = "Study Time";
+  document.getElementById('timer-ui').style.borderColor = "var(--accent)";
+  updateTimerDisplay();
+}
+
+// --- ACTIVITY DASHBOARD LOGIC ---
+function updateStats() {
+  let totalTasks = 0;
+  let uniqueDays = new Set();
+  
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key.startsWith('chk_')) {
+      uniqueDays.add(key);
+      const dayData = JSON.parse(localStorage.getItem(key));
+      for (let task in dayData) { if (dayData[task]) totalTasks++; }
+    }
+  }
+
+  const focusMins = localStorage.getItem('focusMins') || '0';
+  document.getElementById('stat-focus').innerText = focusMins;
+  document.getElementById('stat-tasks').innerText = totalTasks;
+  document.getElementById('stat-days').innerText = uniqueDays.size;
 }
 
 function showPage(name, btn){
@@ -354,7 +474,8 @@ function showPage(name, btn){
   window.scrollTo(0,0);
 }
 
-buildToday(); buildSchedule(); buildChecklist();
+// Init
+buildToday(); buildCalendar(); buildChecklist(); setTimerDuration(25, 5); updateStats();
 </script>
 </body>
 </html>
