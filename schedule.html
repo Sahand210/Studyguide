@@ -4,31 +4,28 @@
     <meta charset="UTF-8">
     <title>Official Study Schedule - Phase 2</title>
     <style>
-        /* Beautiful, motivating fonts */
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&family=Poppins:wght@400;600&display=swap');
 
         :root {
-            --primary-green: #2ecc71; /* A fresh, vibrant green */
-            --dark-green: #27ae60;   /* A deeper, calming green */
-            --light-green: #ebfaf1;   /* A soft, background green */
+            --primary-green: #2ecc71;
+            --dark-green: #27ae60;
+            --light-green: #ebfaf1;
             --text-dark: #2c3e50;
         }
 
         body { 
-            font-family: 'Poppins', 'Noto Sans Arabic', system-ui, sans-serif; 
-            padding: 40px; 
+            font-family: 'Poppins', 'Noto Sans Arabic', sans-serif; 
+            padding: 20px; 
             background-color: #f4f6f8; 
             color: var(--text-dark); 
         }
 
-        /* Medical icon background pattern for inspiration */
         .page { 
             background: white; 
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 100 100'%3E%3Cpath fill='%23ebfaf1' fill-opacity='0.4' d='M50 50 L75 50 C75 36.2 63.8 25 50 25 L50 50 Z M50 50 L50 75 C63.8 75 75 63.8 75 50 L50 50 Z M50 50 L25 50 C25 63.8 36.2 75 50 75 L50 50 Z M50 50 L50 25 C36.2 25 25 36.2 25 50 L50 50 Z'/%3E%3Cpath fill='%232ecc71' fill-opacity='0.03' d='M87.5 50 C87.5 29.3 70.7 12.5 50 12.5 C29.3 12.5 12.5 29.3 12.5 50 C12.5 70.7 29.3 87.5 50 87.5 C70.7 87.5 87.5 70.7 87.5 50 Z M50 81.25 C32.7 81.25 18.75 67.3 18.75 50 C18.75 32.7 32.7 18.75 50 18.75 C67.3 18.75 81.25 32.7 81.25 50 C81.25 67.3 67.3 81.25 50 81.25 Z'/%3E%3Cpath fill='%232ecc71' fill-opacity='0.03' d='M50 50 L62.5 50 C62.5 43.1 56.9 37.5 50 37.5 L50 50 Z M50 50 L50 62.5 C56.9 62.5 62.5 56.9 62.5 50 L50 50 Z M50 50 L37.5 50 C37.5 56.9 43.1 62.5 50 62.5 L50 50 Z M50 50 L50 37.5 C43.1 37.5 37.5 43.1 37.5 50 L50 50 Z'/%3E%3C/svg%3E");
-            width: 210mm; 
-            min-height: 297mm; 
-            padding: 30px; 
+            width: 100%;
+            max-width: 800px;
             margin: auto; 
+            padding: 30px; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
             border-radius: 15px; 
             border: 2px solid #ebfaf1; 
@@ -40,48 +37,48 @@
             padding-bottom: 20px; 
             margin-bottom: 30px; 
         }
-        .header h1 { 
-            margin: 10px 0; 
-            font-size: 28px; 
-            color: var(--dark-green); 
-            font-weight: 700;
-        }
-        .header h2 { 
-            margin: 5px 0; 
-            font-size: 20px; 
-            color: var(--text-dark); 
-            opacity: 0.8;
+
+        .medical-badge {
+            background: var(--primary-green);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
         }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; border-radius: 10px; overflow: hidden; }
-        th, td { border: 1px solid #c2e9d9; padding: 15px; text-align: center; font-size: 16px; }
-        th { 
-            background-color: var(--light-green); 
-            font-weight: 600; 
-            color: var(--dark-green); 
-            font-size: 17px;
-        }
-        .subject-name { font-weight: 700; font-size: 19px; color: var(--dark-green); }
-        .highlight { background-color: #fff9c4 !important; font-weight: bold; border: 2px solid #f9a825;}
-
-        /* Final Biology highlight is green */
-        .biology-highlight { background-color: #d1f2e1 !important; }
-
-        .footer { 
-            margin-top: 50px; 
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        
+        th, td { 
+            border: 1px solid #c2e9d9; 
+            padding: 12px 8px; 
             text-align: center; 
-            color: #777; 
             font-size: 14px; 
+        }
+
+        th { background-color: var(--light-green); color: var(--dark-green); }
+
+        /* This fixes the date overlapping issue */
+        .date-cell { 
+            direction: ltr !important; 
+            unicode-bidi: embed; 
+            white-space: nowrap;
+        }
+
+        .subject-name { font-weight: 700; color: var(--dark-green); font-size: 16px; }
+        
+        .footer { 
+            margin-top: 40px; 
+            text-align: center; 
             border-top: 1px solid #eee; 
             padding-top: 20px; 
         }
-        .quran-verse { font-style: italic; color: var(--text-dark); font-weight: 500; font-size: 16px; margin-bottom: 10px; }
 
-        @media print { 
-            body { background: none; padding: 0; } 
-            .page { box-shadow: none; border: none; background: white; width: 100%; padding: 0; } 
-            table, th, td { border-color: #eee; }
-            th { color: #000; background-color: #f0f0f0; }
+        @media print {
+            body { background: white; padding: 0; }
+            .page { border: none; box-shadow: none; }
         }
     </style>
 </head>
@@ -89,11 +86,11 @@
 
 <div class="page">
     <div class="header">
-        <p style="margin: 0; font-size: 12px; color: #888;">Kurdistan Regional Government - Iraq | حکومەتی هەرێمی کوردستان</p>
-        <p style="margin: 5px 0; font-size: 12px; color: #888;">Pursuing Medicine | بەرەو کۆلێژی پزیشکی</p>
-        <h1>خشتەی پێداچوونەوەی قۆناغی دووەم (٢٠٢٦)</h1>
-        <h2>Official Study Schedule - Phase 2 (Review)</h2>
-        <p style="font-weight: 600; color: var(--primary-green);">Start Date: April 2, 2026 | Total Duration: 61 Days</p>
+        <div class="medical-badge">FUTURE DOCTOR • دکتۆری داهاتوو</div>
+        <h1>خشتەی پێداچوونەوەی قۆناغی دووەم</h1>
+        <p style="color: var(--primary-green); font-weight: bold; margin-top: 5px;">
+            Start: April 2 • End: June 1 (61 Days)
+        </p>
     </div>
 
     <table>
@@ -109,52 +106,51 @@
             <tr>
                 <td class="subject-name">بیرکاری (Math)</td>
                 <td>Thursday</td>
-                <td>2 Apr — 12 Apr</td>
+                <td class="date-cell">2 Apr — 12 Apr</td>
                 <td>11</td>
             </tr>
             <tr>
                 <td class="subject-name">ئینگلیزی (English)</td>
                 <td>Monday</td>
-                <td>13 Apr — 17 Apr</td>
+                <td class="date-cell">13 Apr — 17 Apr</td>
                 <td>5</td>
             </tr>
             <tr>
                 <td class="subject-name">کیمیا (Chemistry)</td>
                 <td>Saturday</td>
-                <td>18 Apr — 27 Apr</td>
+                <td class="date-cell">18 Apr — 27 Apr</td>
                 <td>10</td>
             </tr>
             <tr>
                 <td class="subject-name">عەرەبی (Arabic)</td>
                 <td>Tuesday</td>
-                <td>28 Apr — 2 May</td>
+                <td class="date-cell">28 Apr — 2 May</td>
                 <td>5</td>
             </tr>
             <tr>
                 <td class="subject-name">فیزیا (Physics)</td>
                 <td>Sunday</td>
-                <td>3 May — 13 May</td>
+                <td class="date-cell">3 May — 13 May</td>
                 <td>11</td>
             </tr>
             <tr>
                 <td class="subject-name">کوردی (Kurdish)</td>
                 <td>Wednesday</td>
-                <td>14 May — 18 May</td>
+                <td class="date-cell">14 May — 18 May</td>
                 <td>5</td>
             </tr>
-            <tr class="biology-highlight">
+            <tr style="background-color: #ebfaf1;">
                 <td class="subject-name">زیندەزانی (Biology)</td>
                 <td>Thursday</td>
-                <td>19 May — 1 Jun</td>
-                <td style="font-weight: 700; color: var(--dark-green);">14</td>
+                <td class="date-cell">19 May — 1 Jun</td>
+                <td>14</td>
             </tr>
         </tbody>
     </table>
 
     <div class="footer">
-        <p class="quran-verse">“And that there is not for man except that [good] for which he strives.” (Surah An-Najm 53:39)</p>
-        <p style="margin: 5px 0;">Every day of focused study brings you closer to your goals. You've got this! 🩺</p>
-        <p style="font-size: 12px; opacity: 0.7;">This schedule ensures all review is complete 10 days before the first final exam on June 11th.</p>
+        <p style="font-style: italic; font-weight: 500;">"And that there is not for man except that [good] for which he strives." (53:39)</p>
+        <p style="margin-top: 10px; color: var(--dark-green); font-weight: bold;">You are going to be an amazing doctor. Keep pushing! 🩺✨</p>
     </div>
 </div>
 
