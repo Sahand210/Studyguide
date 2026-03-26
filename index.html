@@ -174,7 +174,7 @@
         But I know <em>you</em>. And the person who made it this far is more than capable of crossing this finish line. 🌟<br><br>
         On the hard days — open this. Remember every page you read, every problem you work through — I see it, and I'm so proud of you.<br><br>
         Take a deep breath. Say Alhamdulillah. Drink some water. And when you are ready, try again.<br><br>
-        <strong style="color:var(--accent);">I believe in you. Always. 💙strong>
+        <strong style="color:var(--accent);">I believe in you. Always. 💙</strong>
       </div>
     </div>
     <button class="sos-btn" style="border:none; background:var(--accent); color:white; margin-top:20px;" onclick="showPage('today', document.querySelector('.nb.active'))">← Back to Today</button>
@@ -192,8 +192,13 @@ const PHASE1 = [
 ];
 
 const PHASE2_BLOCKS = [
-  { s:'Physics', icon:'🔭', color:'#e0eaf4', exam:'2025-07-02', start:'2025-04-02', end:'2025-04-13', days:10 },
-  { s:'English', icon:'🔤', color:'#e0eaf4', exam:'2025-06-28', start:'2025-04-14', end:'2025-04-19', days:5  },
+  { s:'Math',         icon:'📐', color:'#d9e2ec', exam:'2025-06-18', start:'2025-04-02', end:'2025-04-12', days:11 },
+  { s:'English',      icon:'🔤', color:'#e0eaf4', exam:'2025-06-28', start:'2025-04-13', end:'2025-04-18', days:6  },
+  { s:'Chemistry',    icon:'⚗️', color:'#d9e2ec', exam:'2025-06-25', start:'2025-04-19', end:'2025-04-29', days:11 },
+  { s:'Arabic & Ayn', icon:'✍️', color:'#e0eaf4', exam:'2025-06-21', start:'2025-04-30', end:'2025-05-06', days:7  },
+  { s:'Physics',      icon:'🔭', color:'#d9e2ec', exam:'2025-07-02', start:'2025-05-07', end:'2025-05-18', days:12 },
+  { s:'Kurdish',      icon:'📖', color:'#e0eaf4', exam:'2025-06-14', start:'2025-05-19', end:'2025-05-24', days:6  },
+  { s:'Biology',      icon:'🧬', color:'#d9e2ec', exam:'2025-06-11', start:'2025-05-25', end:'2025-06-10', days:17 },
 ];
 
 const ISLAMIC_QUOTES = [
@@ -207,7 +212,7 @@ const ISLAMIC_QUOTES = [
   'Focus on today. Today is enough. You got this.'
 ];
 
-// Tasks place holders
+// Tasks placeholders
 const MORNING_TASKS = {
   'General': [['9:00','Read & summarize a passage 📖','Focus on understanding'],['10:30','Review flashcards 🗂','Active recall']],
 };
@@ -297,7 +302,8 @@ function buildSchedule() {
       <div class="tl-dot" style="background:${unlocked ? b.color : '#ccc'}">${unlocked ? b.icon : '🔒'}</div>
       <div class="tl-body">
         <div class="tl-subj">${b.s}</div>
-        <span class="badge ${unlocked ? '' : 'locked-badge'}" style="background:#d9e2ec; color:var(--text-body);">${unlocked ? 'Unlocks in April' : 'Complete Phase 1 to unlock'}</span>
+        <div class="tl-meta">${b.days} Days</div>
+        <span class="badge ${unlocked ? '' : 'locked-badge'}" style="background:#d9e2ec; color:var(--text-body);">${unlocked ? 'Unlocks ' + new Date(b.start).toLocaleDateString('en-GB',{day:'numeric', month:'short'}) : 'Complete Phase 1'}</span>
       </div></div>`;
   });
   html += '</div>';
