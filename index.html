@@ -1,255 +1,629 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Study Journey</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Study Journey 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main: #fcfdfe;        
+    --bg-element: #f0f4f8;     
+    --accent: #d68a9d;         
+    --accent-light: #f4bdc9;   
+    --accent-blue: #8caebd;    
+    --text-head: #2a3b4c;      
+    --text-body: #4a5d73;      
+    --text-muted: #829ab1;     
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg-main); color:var(--text-body); min-height:100vh; padding-bottom:82px; }
+
+  /* HERO & BASICS */
+  .hero { background:linear-gradient(135deg, #e6afbc 0%, #d68a9d 50%, #bda4b8 100%); padding:48px 24px 60px; text-align:center; position:relative; overflow:hidden; }
+  .hero-badge { display:inline-block; background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.4); color:white; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:6px 16px; border-radius:20px; margin-bottom:18px; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(26px,7vw,44px); color:white; line-height:1.2; margin-bottom:10px; }
+  .hero h1 em { color:#fdf2f5; font-style:italic; border-bottom: 2px solid rgba(255,255,255,0.5);}
+  .hero p { color:rgba(255,255,255,.9); font-size:13px; font-weight:400; }
   
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  .sec { max-width:480px; margin:20px auto 0; padding:0 20px; }
+  .card { background:white; border-radius:16px; padding:20px; box-shadow:0 8px 24px rgba(214,138,157,.08); border:1px solid rgba(214,138,157,.1); }
+  .card.hi { border:2px solid var(--accent); box-shadow:0 8px 28px rgba(214,138,157,.15); }
+  .lbl { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); margin-bottom:6px; }
+  .sec-title { font-family:'Playfair Display',serif; font-size:19px; color:var(--text-head); margin-bottom:14px; font-weight:700;}
 
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #f5f7fa;
-      color: #333;
-      margin: 0;
-      padding: 20px;
-      padding-bottom: 40px;
-    }
-    
-    .header-card {
-      background: linear-gradient(135deg, #6e8efb, #a777e3);
-      color: white;
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 4px 15px rgba(110, 142, 251, 0.3);
-    }
+  /* TODAY PULL */
+  .pull { max-width:480px; margin:-28px auto 0; padding:0 20px; position:relative; z-index:10; }
+  .subj-row { display:flex; align-items:center; gap:14px; border-radius:14px; padding:14px; margin-bottom:12px; }
+  .subj-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; background:var(--accent-light); color:white;}
+  .subj-name { font-family:'Playfair Display',serif; font-size:18px; color:var(--text-head); font-weight:700; }
+  .subj-detail { font-size:12px; color:var(--text-muted); margin-top:2px; line-height:1.4;}
 
-    .header-card h1 {
-      margin: 0 0 5px 0;
-      font-size: 24px;
-    }
+  /* JOURNEY PROGRESS BAR */
+  .prog-track { background: #f4ebd8; height: 12px; border-radius: 10px; margin-top: 12px; overflow: hidden; position: relative; }
+  .prog-fill { background: #cca969; height: 100%; width: 0%; border-radius: 10px; transition: width 1s ease-out; }
+  .prog-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 8px; font-weight: 600; }
 
-    .header-card p {
-      margin: 0;
-      font-size: 14px;
-      opacity: 0.9;
-    }
+  /* QURAN PLAYER */
+  .quran-card { background:linear-gradient(135deg, #f8f9fa, #f0f4f8); border-left: 4px solid var(--accent-blue); }
+  .quran-card audio { width: 100%; height: 36px; margin-top: 10px; outline: none; }
 
-    .section-title {
-      background-color: #FFF9E6;
-      color: #B8860B;
-      padding: 8px 16px;
-      border-radius: 20px;
-      display: inline-block;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 15px;
-      letter-spacing: 0.5px;
-    }
+  /* TASKS & SESSIONS */
+  .session { background:#fdfcfc; border-radius:12px; padding:14px; margin-bottom:10px; border: 1px solid rgba(214,138,157,.1);}
+  .session-label { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+  .task { display:flex; align-items:flex-start; gap:12px; padding:11px 0; border-bottom:1px solid rgba(214,138,157,.05); }
+  .task:last-child { border-bottom:none; }
+  .task-time { font-size:11px; font-weight:700; color:var(--accent-blue); min-width:52px; margin-top:2px; }
+  .task-info { flex:1; }
+  .task-text { font-size:13px; color:var(--text-head); line-height:1.5; font-weight:500;}
 
-    .subject-card {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 15px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.03);
-      display: flex;
-      align-items: flex-start;
-      gap: 15px;
-    }
+  /* INTERACTIVE CHECKLIST */
+  .chk { display:flex; align-items:center; gap:12px; background:white; border-radius:12px; padding:15px; margin-bottom:10px; box-shadow:0 2px 8px rgba(0,0,0,.02); border: 2px solid transparent; cursor:pointer; transition:all .2s; }
+  .chk.done { opacity:0.6; background:#f9f9f9; border-color: transparent; }
+  .chk-box { width:26px; height:26px; border-radius:8px; border:2px solid var(--accent-blue); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .2s;}
+  .chk.done .chk-box { background:var(--accent); border-color:var(--accent); }
+  .chk-lbl { font-size:14px; font-weight: 500; color:var(--text-head); transition:all .2s;}
+  .chk.done .chk-lbl { text-decoration:line-through; color:var(--text-muted); }
 
-    .icon-circle {
-      background: #F0F4F8;
-      min-width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-    }
+  /* POMODORO TIMER */
+  .timer-wrap { text-align:center; padding: 20px 0; }
+  .timer-circle { width:220px; height:220px; border-radius:50%; border:8px solid var(--accent); display:flex; align-items:center; justify-content:center; flex-direction:column; margin:0 auto; background:white; box-shadow:0 10px 30px rgba(214,138,157,.15); transition: border-color 0.3s;}
+  .timer-time { font-family:'DM Sans', monospace; font-size:54px; font-weight:700; color:var(--accent); line-height:1; letter-spacing:-1px;}
+  .timer-mode { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--text-muted); margin-bottom:5px;}
+  
+  .duration-picker { display:flex; justify-content:center; gap:8px; margin-bottom: 24px; background: #f0f4f8; padding: 6px; border-radius: 30px; display: inline-flex;}
+  .dur-btn { background:transparent; border:none; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; color:var(--text-muted); cursor: pointer; transition: 0.2s;}
+  .dur-btn.active { background: white; color: var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,0.05);}
 
-    .subject-info h3 {
-      margin: 0 0 5px 0;
-      font-size: 18px;
-      color: #2c3e50;
-    }
+  .btn-group { display:flex; justify-content:center; gap:12px; margin-top:24px; }
+  .btn { padding:14px 28px; border-radius:30px; border:none; font-size:14px; font-weight:700; cursor:pointer; transition:all 0.2s; }
+  .btn-primary { background:var(--accent); color:white; box-shadow:0 4px 12px rgba(214,138,157,.3); }
+  .btn-primary:active { transform: translateY(2px); box-shadow:0 2px 6px rgba(214,138,157,.3); }
+  .btn-secondary { background:var(--bg-element); color:var(--text-body); }
+  
+  .phone-warning { background: #fff0f3; color: #d6336c; font-size: 13px; font-weight: 600; padding: 12px; border-radius: 12px; display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; border: 1px dashed #ffb3c6;}
 
-    .subject-info p {
-      margin: 0 0 4px 0;
-      font-size: 13px;
-      color: #666;
-    }
+  /* STATS DASHBOARD */
+  .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;}
+  .stat-card { background:white; padding:24px 20px; border-radius:16px; text-align:center; box-shadow:0 4px 20px rgba(214,138,157,.06); border:1px solid rgba(214,138,157,.1); }
+  .stat-num { font-family:'Playfair Display',serif; font-size:38px; color:var(--accent); font-weight:700; margin-bottom:4px; line-height:1;}
+  .stat-lbl { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted); }
 
-    .btn-done {
-      background: #E8F0FE;
-      color: #1A73E8;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-weight: bold;
-      font-size: 13px;
-      cursor: pointer;
-      margin-top: 8px;
-      transition: background 0.2s;
-    }
+  /* NAV */
+  .nav { position:fixed; bottom:0; left:0; right:0; background:white; border-top:1px solid rgba(0,0,0,.04); display:flex; justify-content:space-around; padding:10px 0 20px; z-index:100; box-shadow: 0 -4px 24px rgba(0,0,0,0.03);}
+  .nb { display:flex; flex-direction:column; align-items:center; gap:4px; font-size:10px; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:.5px; background:none; border:none; padding:4px 8px; }
+  .nb.active { color:var(--accent); }
+  .nb-icon { font-size:20px; }
+  .page { display:none; animation: fadeIn 0.3s ease; }
+  .page.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
 
-    .btn-done:active {
-      background: #d2e3fc;
-    }
+  /* =========================================
+     GAMIFIED PLAN PAGE (BROWN/CREAM DESIGN)
+     ========================================= */
+  #page-plan { background-color: #fbf8f1; min-height: 100vh; padding-bottom: 100px; }
+  .plan-hero { background: linear-gradient(135deg, #4a3424 0%, #6b4c34 100%); padding: 60px 24px 40px; text-align: center; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(74, 52, 36, 0.15);}
+  .plan-hero-badge { display: inline-block; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 20px; margin-bottom: 16px; }
+  .plan-hero h1 { font-family: 'Playfair Display', serif; font-size: 36px; color: #fff; margin-bottom: 8px; font-style: italic;}
+  .plan-hero p { color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 400; }
+  
+  .plan-sec { max-width: 480px; margin: 0 auto; padding: 0 20px; }
+  .plan-phase-title { background: #edf2f7; color: #4a5568; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px; margin: 24px 0 12px; }
+  .plan-phase-title.gold { background: #fefcbf; color: #744210; }
+  
+  .level-card { display: flex; gap: 16px; background: white; border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.02); transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden;}
+  .level-icon { width: 48px; height: 48px; border-radius: 50%; background: #f0f4f8; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+  .level-info { flex: 1; display: flex; flex-direction: column; justify-content: center;}
+  .level-title { font-size: 15px; font-weight: 700; color: #3d2b1f; margin-bottom: 4px; }
+  .level-meta { font-size: 12px; color: #829ab1; line-height: 1.4; }
+  .level-status { margin-top: 8px; display: inline-flex; background: #e6fffa; color: #285e61; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; align-items: center; gap: 4px; width: fit-content; }
+  
+  /* LOCKET STATE */
+  .level-card.locked { opacity: 0.5; filter: grayscale(100%); cursor: not-allowed; }
+  .level-card.locked .level-icon { background: #e2e8f0; }
+  .locked-overlay { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 20px; opacity: 0.5; }
 
-    .progress-section {
-      background: white;
-      border-radius: 20px;
-      padding: 20px;
-      margin-top: 30px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.03);
-    }
-  </style>
+  .buffer-text { color: #d68a9d; font-weight: bold; font-style: italic; display:block; margin-top:2px; font-size:11px;}
+
+</style>
 </head>
 <body>
 
-  <div class="header-card">
-    <h1>Study Journey 📚</h1>
-    <p>March 27 - Jul 2 (98 days total)</p>
+<nav class="nav">
+  <button class="nb active" onclick="showPage('today',this)"><span class="nb-icon">🌸</span>Today</button>
+  <button class="nb" onclick="showPage('timer',this)"><span class="nb-icon">⏱️</span>Timer</button>
+  <button class="nb" onclick="showPage('checklist',this)"><span class="nb-icon">✅</span>Tasks</button>
+  <button class="nb" onclick="showPage('plan',this)"><span class="nb-icon">🗺️</span>Plan</button>
+  <button class="nb" onclick="showPage('stats',this)"><span class="nb-icon">📊</span>Activity</button>
+</nav>
+
+<div id="page-today" class="page active">
+  <div class="hero">
+    <div class="hero-badge">📚 Level up your mind</div>
+    <h1>Bismillah Lare Gyan,<br><em>let's begin.</em> 🌸</h1>
   </div>
 
-  <div class="section-title">
-    📌 PHASE 2 — REVIEW (IN ORDER)
-  </div>
-
-  <div id="phase2-container"></div>
-
-  <div class="progress-section">
-    <h3 style="margin: 0 0 10px 0; font-size: 16px;">Journey Progress</h3>
-    <div style="background: #e0e0e0; border-radius: 10px; height: 12px; width: 100%; overflow: hidden;">
-      <div style="background: linear-gradient(90deg, #4CAF50, #8BC34A); width: 25%; height: 100%; border-radius: 10px;"></div>
+  <div class="pull">
+    <div class="card hi">
+      <div class="lbl">Today is</div>
+      <div style="font-family:'Playfair Display',serif;font-size:19px;color:var(--text-head);margin-bottom:14px; font-weight:bold;" id="today-date"></div>
+      <div class="subj-row" id="today-row">
+        <div class="subj-icon" id="today-icon"></div>
+        <div><div class="subj-name" id="today-name"></div><div class="subj-detail" id="today-detail"></div></div>
+      </div>
     </div>
-    <p style="text-align: right; font-size: 12px; color: #888; margin: 5px 0 0 0;">Phase 1 complete</p>
   </div>
 
-  <script>
-    // The completely fixed array with correct days, dates, and messages
-    const phase2Subjects = [
-      {
-        name: "Math",
-        icon: "📐",
-        examDate: "18 Jun",
-        planned: "2 Apr → 12 Apr",
-        daysCount: 11,
-        completionTitle: "Math is done! 🎉",
-        quranVerse: "“And that there is not for man except that [good] for which he strives.”\n(Surah An-Najm 53:39)",
-        medSchoolMessage: "Every complex equation you just solved brings you one step closer to your white coat. Med school is waiting for you, habibi!"
-      },
-      {
-        name: "English",
-        icon: "🔤",
-        examDate: "28 Jun",
-        planned: "13 Apr → 17 Apr",
-        daysCount: 5,
-        completionTitle: "English is complete! 🌟",
-        quranVerse: "“Indeed, with hardship [will be] ease.”\n(Surah Ash-Sharh 94:6)",
-        medSchoolMessage: "You pushed through the hardship! The ease and joy of walking through the doors of medical school will soon be your reality. Keep going, future doctor!"
-      },
-      {
-        name: "Chemistry",
-        icon: "⚗️",
-        examDate: "25 Jun",
-        planned: "18 Apr → 27 Apr",
-        daysCount: 10,
-        completionTitle: "Chemistry conquered! 🧪",
-        quranVerse: "“And He found you lost and guided [you].”\n(Surah Ad-Duhaa 93:7)",
-        medSchoolMessage: "The formulas might have been heavy, but your path to medicine is clear and guided. You are building the exact discipline a brilliant doctor needs!"
-      },
-      {
-        name: "Arabic",
-        icon: "✍️",
-        examDate: "21 Jun",
-        planned: "28 Apr → 2 May",
-        daysCount: 5,
-        completionTitle: "Arabic is finished! 📖",
-        quranVerse: "“My Lord, increase me in knowledge.”\n(Surah Taha 20:114)",
-        medSchoolMessage: "Your pursuit of knowledge is so blessed. Soon, all this incredible dedication will be used to heal patients in med school!"
-      },
-      {
-        name: "Physics",
-        icon: "🔭",
-        examDate: "2 Jul",
-        planned: "3 May → 13 May",
-        daysCount: 11,
-        completionTitle: "Physics is out of the way! ⚡",
-        quranVerse: "“Allah does not burden a soul beyond that it can bear.”\n(Surah Al-Baqarah 2:286)",
-        medSchoolMessage: "You handled the pressure beautifully. If you can conquer this, the late nights in med school will be a breeze for you. I'm so proud of you!"
-      },
-      {
-        name: "Kurdish",
-        icon: "🌸",
-        examDate: "14 Jun",
-        planned: "14 May → 18 May",
-        daysCount: 5,
-        completionTitle: "Kurdish is done! 📚",
-        quranVerse: "“So be patient with gracious patience.”\n(Surah Al-Ma'arij 70:5)",
-        medSchoolMessage: "Your beautiful patience is paying off. You are in the final stretch now. Take a deep breath—med school is almost in your grasp!"
-      },
-      {
-        name: "Biology",
-        icon: "🧬",
-        examDate: "11 Jun",
-        planned: "19 May → 1 Jun",
-        daysCount: 14,
-        completionTitle: "Phase 2 is Complete! 🩺💛",
-        quranVerse: "“And whoever saves one - it is as if he had saved mankind entirely.”\n(Surah Al-Ma'idah 5:32)",
-        medSchoolMessage: "You are studying the creation of Allah to one day save lives. The review is done, your foundation is set. You are going to be an incredible doctor!"
-      }
-    ];
+  <div class="sec">
+    <div class="card">
+      <div class="lbl">🗓️ JOURNEY PROGRESS</div>
+      <div class="prog-track">
+        <div id="progress-fill" class="prog-fill"></div>
+      </div>
+      <div class="prog-labels">
+        <span>27 Mar</span>
+        <span id="progress-text">0% done</span>
+        <span>2 Jul</span>
+      </div>
+    </div>
+  </div>
 
-    function renderPhase2() {
-      const container = document.getElementById("phase2-container");
-      let htmlContent = "";
+  <div class="sec">
+    <div class="card quran-card">
+      <div class="lbl">Heart & Mind 🕊️</div>
+      <p style="font-size: 13px; font-weight: 500; color: var(--text-head); margin-bottom: 4px;">Surah Ash-Sharh (The Relief)</p>
+      <p style="font-size: 11px; color: var(--text-muted); font-style: italic;">"For indeed, with hardship [will be] ease." Listen to fix your heart before you study.</p>
+      <audio controls src="https://server8.mp3quran.net/afs/094.mp3" preload="none"></audio>
+    </div>
+  </div>
 
-      phase2Subjects.forEach((subject, index) => {
-        htmlContent += `
-          <div class="subject-card">
-            <div class="icon-circle">${subject.icon}</div>
-            <div class="subject-info">
-              <h3>${subject.name}</h3>
-              <p><strong>Exam:</strong> ${subject.examDate}</p>
-              <p><strong>Review:</strong> ${subject.planned} (${subject.daysCount} days)</p>
-              <button class="btn-done" onclick="finishSubject(${index})">Tap when finished ✨</button>
-            </div>
-          </div>
-        `;
-      });
+  <div class="sec">
+    <div class="sec-title">📋 Today's Game Plan</div>
+    <div id="sessions"></div>
+  </div>
+</div>
 
-      container.innerHTML = htmlContent;
-    }
-
-    function finishSubject(index) {
-      const subject = phase2Subjects[index];
+<div id="page-timer" class="page">
+  <div class="hero" style="padding-bottom:32px;">
+    <div class="hero-badge">Deep Work Zone</div>
+    <h1><em>Focus</em> Mode 🧠</h1>
+    <p>Train your mind, Lare Gyan. You can do this.</p>
+  </div>
+  <div class="sec" style="text-align: center;">
+    <div class="card" style="margin-top:20px;">
       
-      // Beautiful SweetAlert pop-up instead of standard browser alert
-      Swal.fire({
-        title: subject.completionTitle,
-        html: `
-          <div style="font-size: 15px; color: #555; line-height: 1.6; margin-top: 10px;">
-            <p style="font-style: italic; color: #2c3e50; font-weight: 500;">${subject.quranVerse}</p>
-            <hr style="border: 0; height: 1px; background: #eee; margin: 15px 0;">
-            <p>${subject.medSchoolMessage}</p>
-          </div>
-        `,
-        icon: 'success',
-        confirmButtonText: 'Alhamdulillah 🤍',
-        confirmButtonColor: '#6e8efb',
-        backdrop: `rgba(0,0,0,0.4)`
-      });
+      <div class="duration-picker">
+        <button class="dur-btn active" id="btn-25" onclick="setTimerDuration(25, 5)">25m Study / 5m Break</button>
+        <button class="dur-btn" id="btn-50" onclick="setTimerDuration(50, 10)">50m Study / 10m Break</button>
+      </div>
+
+      <div class="timer-wrap">
+        <div class="timer-circle" id="timer-ui">
+          <div class="timer-mode" id="timer-label">Study Time</div>
+          <div class="timer-time" id="time-display">25:00</div>
+        </div>
+        
+        <div class="phone-warning">
+          <span>📵</span> Put your phone away, face down. Be present.
+        </div>
+        
+        <audio id="break-audio" src="https://server8.mp3quran.net/afs/055.mp3" preload="none"></audio>
+
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="resetTimer()">Reset</button>
+          <button class="btn btn-primary" id="start-btn" onclick="toggleTimer()">Start Focus</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-checklist" class="page">
+  <div class="hero" style="padding-bottom:32px;">
+    <div class="hero-badge">Daily Quests</div>
+    <h1><em>Check it</em> off 🎯</h1>
+    <p>Complete all tasks, Lare Gyan, to win today's level!</p>
+  </div>
+  <div class="sec" style="margin-top:24px;" id="checklist"></div>
+</div>
+
+<div id="page-plan" class="page">
+  <div class="plan-hero">
+    <div class="plan-hero-badge">Your Full Plan</div>
+    <h1>Smart Schedule</h1>
+    <p>Adapts to your speed secretly 🤫</p>
+  </div>
+  <div class="plan-sec" id="plan-container">
+    </div>
+</div>
+
+<div id="page-stats" class="page">
+  <div class="hero" style="padding-bottom:32px;">
+    <div class="hero-badge">Dashboard</div>
+    <h1>Her <em>Activity</em> 📊</h1>
+    <p>Track your hard work and consistency, Lare Gyan.</p>
+  </div>
+  <div class="sec">
+    <div class="stat-grid">
+      <div class="stat-card" style="grid-column: 1 / -1;">
+        <div class="stat-num" id="stat-focus">0</div>
+        <div class="stat-lbl">Focus Minutes Logged</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-tasks">0</div>
+        <div class="stat-lbl">Tasks Done</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-days">0</div>
+        <div class="stat-lbl">Days Logged</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// --- CORE DATA & HELPER DATES ---
+const D = s => new Date(s + 'T00:00:00');
+const TODAY = () => { let d = new Date(); d.setHours(0,0,0,0); return d; };
+const addDays = (d, num) => { let nd = new Date(d.getTime()); nd.setDate(nd.getDate() + num); return nd; };
+const fmt = d => d.toLocaleDateString('en-GB', {day:'numeric', month:'short'});
+
+// Phase 1 (Static Bootcamp)
+const P1_CONFIG = [
+  { id: 0, title: 'General Study — Day 1', date: '2026-03-27' },
+  { id: 1, title: 'General Study — Day 2', date: '2026-03-29' },
+  { id: 2, title: 'General Study — Day 3', date: '2026-03-30' },
+  { id: 3, title: 'General Study — Day 4', date: '2026-03-31' },
+  { id: 4, title: 'General Study — Boss Level!', date: '2026-04-01' }
+];
+
+// Phase 2 (Dynamic with Hidden Buffers - Exact Order and Exact Math)
+const P2_SUBJECTS = [
+  { id: 5, s: 'Math',      icon: '📐', base: 11, buf: 2, color: '#8caebd', exam: '2026-06-18' },
+  { id: 6, s: 'English',   icon: '🔤', base: 5,  buf: 2, color: '#d68a9d', exam: '2026-06-28' },
+  { id: 7, s: 'Chemistry', icon: '⚗️', base: 9,  buf: 1, color: '#a3b899', exam: '2026-06-25' },
+  { id: 8, s: 'Arabic',    icon: '✍️', base: 6,  buf: 1, color: '#e6afbc', exam: '2026-06-21' },
+  { id: 9, s: 'Physics',   icon: '🔭', base: 11, buf: 2, color: '#8caebd', exam: '2026-07-02' },
+  { id: 10, s:'Kurdish',   icon: '📖', base: 5,  buf: 2, color: '#d68a9d', exam: '2026-06-14' },
+  { id: 11, s:'Biology',   icon: '🧬', base: 12, buf: 2, color: '#a3b899', exam: '2026-06-11' }
+];
+
+const MORNING_TASKS = {
+  'General': [['9:00','Read & summarize a passage 📖'],['10:30','Review flashcards 🗂']],
+  'Math': [['9:00','Review key formulas & theorems 📐'],['10:30','Solve 15 practice problems 📝']],
+  'English': [['9:00','Vocabulary flashcards & review 🔤'],['10:30','Reading comprehension practice 📚']],
+  'Chemistry': [['9:00','Review equations and moles ⚗️'],['10:30','Memorize organic reactions 🧪']],
+  'Arabic': [['9:00','Review grammar rules (Nahw/Sarf) ✍️'],['10:30','Read literature texts 📜']],
+  'Physics': [['9:00','Review formulas and derivations 🔭'],['10:30','Read conceptual theory notes 💡']],
+  'Kurdish': [['9:00','Study Adab: 3 pages & answer questions 📖'],['10:30','Grammar and syntax practice 🗣️']],
+  'Biology': [['9:00','Read textbook chapter & take notes 🧬'],['10:30','Active recall / flashcards 🧠']]
+};
+
+const AFTERNOON_TASKS = {
+  'General': [['2:00','Practice Questions 📝'],['4:00','Organize notes for tomorrow 📋']],
+  'Math': [['2:00','Do 1 full Past Paper section ⏳'],['4:30','Review incorrect answers 🎯']],
+  'English': [['2:00','Grammar exercises ✍️'],['4:00','Write a practice essay 📝']],
+  'Chemistry': [['2:00','Practice Past Paper questions 📋'],['4:30','Review lab knowledge 🔬']],
+  'Arabic': [['2:00','Vocabulary memorization 🧠'],['4:00','Solve Past Paper questions ⏳']],
+  'Physics': [['2:00','Solve calculation problems 🧮'],['4:30','Past paper practice questions ⏳']],
+  'Kurdish': [['2:00','Writing and essay practice ✍️'],['4:00','Reading comprehension drills 📚']],
+  'Biology': [['2:00','Draw and label key diagrams 🖍️'],['4:30','Past paper MCQs and review ⏳']]
+};
+
+
+// --- DYNAMIC SCHEDULE ENGINE ---
+function generateSchedule() {
+  let progress = JSON.parse(localStorage.getItem('gameProgressObj') || '{}');
+  
+  // Migrate older array progress if it exists
+  let oldProgress = JSON.parse(localStorage.getItem('gameProgress'));
+  if (Array.isArray(oldProgress)) {
+      oldProgress.forEach(id => { progress[id] = TODAY().toISOString().slice(0,10); });
+      localStorage.setItem('gameProgressObj', JSON.stringify(progress));
+      localStorage.removeItem('gameProgress');
+  }
+
+  let schedule = [];
+  let currDate = D('2026-04-02'); // Fixed start for Phase 2
+
+  P2_SUBJECTS.forEach(sub => {
+      let block = { ...sub };
+      block.start = new Date(currDate.getTime());
+      
+      if (progress[sub.id]) {
+          block.actual_end = D(progress[sub.id]);
+          block.status = 'done';
+          currDate = addDays(block.actual_end, 1);
+      } else {
+          block.target_end = addDays(currDate, sub.base - 1);
+          block.max_end = addDays(block.target_end, sub.buf);
+          
+          if (!schedule.some(s => s.status === 'active')) {
+              block.status = 'active';
+              currDate = addDays(block.target_end, 1);
+          } else {
+              block.status = 'locked';
+              currDate = addDays(block.target_end, 1);
+          }
+      }
+      schedule.push(block);
+  });
+  return { schedule, progress };
+}
+
+function getTodayBlock() {
+  const td = TODAY();
+  const tTime = td.getTime();
+  
+  // Check Phase 1
+  for (let p of P1_CONFIG) {
+    if (D(p.date).getTime() === tTime) return { phase: 1, s: 'General', icon: '📚', label: p.title, color: 'var(--accent-light)' };
+  }
+  if (tTime < D('2026-03-27').getTime()) return { phase: 0, s: 'Not started yet', icon: '⏳', color: 'var(--accent-light)' };
+
+  // Generate dynamic Phase 2
+  let { schedule } = generateSchedule();
+  let activeSub = schedule.find(s => s.status === 'active');
+  
+  if (activeSub) {
+    let msg = `Target: Finish by ${fmt(activeSub.target_end)}`;
+    if (tTime > activeSub.target_end.getTime()) msg = `Take your time Lare Gyan, using a buffer day!`;
+    return { phase: 2, ...activeSub, detailMsg: msg };
+  }
+  
+  return { phase: 4, s: 'Exam Season!', icon: '🎉', detailMsg: 'You survived!', color: '#cca969' };
+}
+
+
+// --- UI BUILDERS ---
+function buildPlanGame() {
+  const container = document.getElementById('plan-container');
+  let { schedule, progress } = generateSchedule();
+  let html = `<div class="plan-phase-title">📌 PHASE 1 — GENERAL STUDY · 27 MAR — 1 APR</div>`;
+
+  // Render Phase 1
+  P1_CONFIG.forEach((level, index) => {
+    let isUnlocked = (index === 0) || !!progress[index - 1];
+    let isDone = !!progress[index];
+    let cardClass = isUnlocked ? "" : "locked";
+    let statusHTML = isDone ? `<div class="level-status">✔ Done</div>` : (!isUnlocked ? `<div class="locked-overlay">🔒</div>` : `<div class="level-status" style="background:#e2e8f0; color:#4a5568;">Tap to complete</div>`);
+
+    html += `<div class="level-card ${cardClass}" onclick="toggleGameLevel(${index}, ${isUnlocked})">
+      <div class="level-icon">📚</div>
+      <div class="level-info">
+        <div class="level-title">${level.title}</div>
+        <div class="level-meta">${fmt(D(level.date))}</div>
+        ${statusHTML}
+      </div>
+    </div>`;
+  });
+
+  html += `<div class="plan-phase-title gold">📌 PHASE 2 — REVIEW (IN ORDER)</div>`;
+
+  // Render Dynamic Phase 2
+  schedule.forEach((sub) => {
+    let isUnlocked = sub.status === 'active' || sub.status === 'done';
+    let cardClass = isUnlocked ? "" : "locked";
+    
+    let subMeta = `Exam: ${fmt(D(sub.exam))}<br>`;
+    
+    if (sub.status === 'done') {
+      subMeta += `Completed in ${Math.round((sub.actual_end - sub.start)/(1000*60*60*24))+1} days!`;
+    } else if (sub.status === 'active') {
+      let daysOver = Math.round((TODAY() - sub.target_end)/(1000*60*60*24));
+      if (daysOver > 0) {
+        subMeta += `Review: ${fmt(sub.start)} → ${fmt(sub.target_end)} <span class="buffer-text">Extended for you (+${daysOver} buffer)</span>`;
+      } else {
+        subMeta += `Review: ${fmt(sub.start)} → ${fmt(sub.target_end)} (${sub.base} days)`;
+      }
+    } else {
+      subMeta += `Planned: ${fmt(sub.start)} → ${fmt(sub.target_end)}`;
     }
 
-    // Load everything when page opens
-    window.onload = function() {
-      renderPhase2();
-    };
-  </script>
+    let statusHTML = sub.status === 'done' ? `<div class="level-status">✔ Done</div>` : (!isUnlocked ? `<div class="locked-overlay">🔒</div>` : `<div class="level-status" style="background:#e2e8f0; color:#4a5568;">Tap to complete</div>`);
+
+    html += `<div class="level-card ${cardClass}" onclick="toggleGameLevel(${sub.id}, ${isUnlocked})">
+      <div class="level-icon" style="background:${sub.color}33;">${sub.icon}</div>
+      <div class="level-info">
+        <div class="level-title">${sub.s}</div>
+        <div class="level-meta">${subMeta}</div>
+        ${statusHTML}
+      </div>
+    </div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+window.toggleGameLevel = function(id, isUnlocked) {
+  if (!isUnlocked) {
+    alert("🔒 Lare Gyan, you have to complete the previous level first to unlock this one!");
+    return;
+  }
+  let progress = JSON.parse(localStorage.getItem('gameProgressObj') || '{}');
+  
+  if (progress[id]) {
+    // Uncheck this and everything after it
+    Object.keys(progress).forEach(k => { if (parseInt(k) >= id) delete progress[k]; });
+  } else {
+    progress[id] = TODAY().toISOString().slice(0,10);
+    if(id === 4) alert("🎉 YOU FINISHED PHASE 1 LARE GYAN! Phase 2 is now unlocked. You are amazing!");
+    if(id > 4) alert("🌟 Brilliant work Lare Gyan! You finished this subject. Take a deep breath, the next one is shifting earlier to give you more time!");
+  }
+  
+  localStorage.setItem('gameProgressObj', JSON.stringify(progress));
+  buildToday(); 
+  buildPlanGame(); 
+  buildChecklist();
+};
+
+
+function buildToday() {
+  const td = TODAY();
+  document.getElementById('today-date').textContent = td.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+  const block = getTodayBlock();
+  
+  const mTasks = MORNING_TASKS[block.s] || MORNING_TASKS['General'];
+  const aTasks = AFTERNOON_TASKS[block.s] || AFTERNOON_TASKS['General'];
+  
+  document.getElementById('today-icon').textContent = block.icon;
+  document.getElementById('today-icon').style.background = block.color;
+  document.getElementById('today-name').textContent = block.phase === 1 ? 'Phase 1: Bootcamp' : (block.phase === 2 ? `Focus: ${block.s}` : block.s);
+  document.getElementById('today-detail').innerHTML = block.detailMsg || (block.phase === 1 ? 'Let\'s go!' : '');
+  
+  document.getElementById('sessions').innerHTML=`
+    <div class="session"><div class="session-label">☀️ Morning Session</div>
+      ${mTasks.map(([time,text])=>`<div class="task"><div class="task-time">${time}</div><div class="task-info"><div class="task-text">${text}</div></div></div>`).join('')}</div>
+    <div class="session"><div class="session-label">🌙 Afternoon Session</div>
+      ${aTasks.map(([time,text])=>`<div class="task"><div class="task-time">${time}</div><div class="task-info"><div class="task-text">${text}</div></div></div>`).join('')}</div>`;
+      
+  buildProgress();
+}
+
+function buildProgress() {
+  const startDate = D('2026-03-27').getTime();
+  const endDate = D('2026-07-02').getTime();
+  const today = TODAY().getTime();
+
+  let percent = 0;
+  if (today >= endDate) percent = 100;
+  else if (today > startDate) percent = Math.round(((today - startDate) / (endDate - startDate)) * 100);
+
+  setTimeout(() => {
+    document.getElementById('progress-fill').style.width = percent + '%';
+    document.getElementById('progress-text').textContent = percent + '% done';
+  }, 100);
+}
+
+function buildChecklist() {
+  const block = getTodayBlock();
+  const dateKey = 'chk_' + TODAY().toISOString().slice(0,10);
+  const stored = JSON.parse(localStorage.getItem(dateKey)||'{}');
+
+  const mTasks = MORNING_TASKS[block.s] || MORNING_TASKS['General'];
+  const aTasks = AFTERNOON_TASKS[block.s] || AFTERNOON_TASKS['General'];
+  let tasks = [...mTasks.map(t=>t[1]), ...aTasks.map(t=>t[1]), 'Say Alhamdulillah & Sleep Early 🌙'];
+
+  document.getElementById('checklist').innerHTML=tasks.map((t,i)=>{
+    const key='t'+i, c=stored[key]||false;
+    return `<div class="chk ${c?'done':''}" onclick="toggleChk(this,'${key}','${dateKey}')">
+      <div class="chk-box">${c?'<span style="color:white;font-weight:bold;">✓</span>':''}</div><div class="chk-lbl">${t}</div></div>`;
+  }).join('');
+}
+
+function toggleChk(el,key,dateKey){
+  el.classList.toggle('done');
+  const c=el.classList.contains('done');
+  el.querySelector('.chk-box').innerHTML=c?'<span style="color:white;font-weight:bold;">✓</span>':'';
+  const s=JSON.parse(localStorage.getItem(dateKey)||'{}');
+  s[key]=c; localStorage.setItem(dateKey,JSON.stringify(s));
+  updateStats();
+}
+
+// --- POMODORO TIMER LOGIC ---
+let timerInterval;
+let studyMins = 25;
+let breakMins = 5;
+let timeLeft = 25 * 60; 
+let isRunning = false;
+let currentMode = 'study';
+
+function setTimerDuration(sMins, bMins) {
+  studyMins = sMins; breakMins = bMins;
+  document.getElementById('btn-25').classList.toggle('active', sMins === 25);
+  document.getElementById('btn-50').classList.toggle('active', sMins === 50);
+  resetTimer();
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+  const s = (timeLeft % 60).toString().padStart(2, '0');
+  document.getElementById('time-display').innerText = `${m}:${s}`;
+}
+
+function toggleTimer() {
+  const breakAudio = document.getElementById('break-audio');
+  
+  if (isRunning) {
+    clearInterval(timerInterval);
+    document.getElementById('start-btn').innerText = "Resume";
+  } else {
+    if (timeLeft === studyMins * 60 && currentMode === 'study') {
+        breakAudio.play().then(() => breakAudio.pause()).catch(e => console.log(e));
+    }
+    document.getElementById('start-btn').innerText = "Pause";
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      updateTimerDisplay();
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        
+        if (currentMode === 'study') {
+          let mins = parseInt(localStorage.getItem('focusMins') || '0') + studyMins;
+          localStorage.setItem('focusMins', mins);
+          updateStats();
+          alert(`Time is up Lare Gyan! Amazing focus. Close your eyes, rest your mind, and listen to the recitation for your ${breakMins} min break.`);
+          currentMode = 'break';
+          timeLeft = breakMins * 60;
+          breakAudio.play();
+        } else {
+          alert("Break is over Lare Gyan! Ready to focus and conquer again?");
+          currentMode = 'study';
+          timeLeft = studyMins * 60;
+          breakAudio.pause(); breakAudio.currentTime = 0;
+        }
+        
+        document.getElementById('timer-label').innerText = currentMode === 'study' ? "Study Time" : "Break Time";
+        document.getElementById('timer-ui').style.borderColor = currentMode === 'study' ? "var(--accent)" : "var(--accent-blue)";
+        document.getElementById('start-btn').innerText = "Start Focus";
+        updateTimerDisplay();
+        isRunning = false;
+      }
+    }, 1000);
+  }
+  isRunning = !isRunning;
+}
+
+function resetTimer() { 
+  clearInterval(timerInterval);
+  isRunning = false;
+  currentMode = 'study';
+  timeLeft = studyMins * 60;
+  document.getElementById('start-btn').innerText = "Start Focus";
+  document.getElementById('timer-label').innerText = "Study Time";
+  document.getElementById('timer-ui').style.borderColor = "var(--accent)";
+  const breakAudio = document.getElementById('break-audio');
+  breakAudio.pause(); breakAudio.currentTime = 0;
+  updateTimerDisplay();
+}
+
+// --- DASHBOARD & ROUTING ---
+function updateStats() {
+  let totalTasks = 0;
+  let uniqueDays = new Set();
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key.startsWith('chk_')) {
+      uniqueDays.add(key);
+      const dayData = JSON.parse(localStorage.getItem(key));
+      for (let task in dayData) { if (dayData[task]) totalTasks++; }
+    }
+  }
+  document.getElementById('stat-focus').innerText = localStorage.getItem('focusMins') || '0';
+  document.getElementById('stat-tasks').innerText = totalTasks;
+  document.getElementById('stat-days').innerText = uniqueDays.size;
+}
+
+function showPage(name, btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(btn) btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// Init
+buildToday(); buildPlanGame(); buildChecklist(); setTimerDuration(25, 5); updateStats();
+</script>
 </body>
 </html>
