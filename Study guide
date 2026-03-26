@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Study Journey 💛</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdf6ec; --warm: #f5e6c8; --gold: #c9943a;
+    --gold-light: #e8b96a; --deep: #2c1f0e; --text: #3d2b10; --muted: #8a6f4a;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text); min-height:100vh; padding-bottom:82px; }
+
+.hero { background:linear-gradient(135deg,#2c1f0e 0%,#4a3018 50%,#6b4a28 100%); padding:48px 24px 60px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:’’; position:absolute; inset:0; background:radial-gradient(ellipse at 30% 50%,rgba(201,148,58,.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 20%,rgba(232,185,106,.1) 0%,transparent 50%); }
+.sparkle { position:absolute; width:3px; height:3px; background:var(–gold-light); border-radius:50%; animation:twinkle 3s ease-in-out infinite; }
+@keyframes twinkle { 0%,100%{opacity:.2;transform:scale(1)} 50%{opacity:1;transform:scale(1.5)} }
+.hero-badge { display:inline-block; background:rgba(201,148,58,.2); border:1px solid rgba(201,148,58,.4); color:var(–gold-light); font-size:11px; font-weight:500; letter-spacing:2px; text-transform:uppercase; padding:6px 16px; border-radius:20px; margin-bottom:18px; position:relative; }
+.hero h1 { font-family:‘Playfair Display’,serif; font-size:clamp(26px,7vw,44px); color:#fdf6ec; line-height:1.2; margin-bottom:10px; position:relative; }
+.hero h1 em { color:var(–gold-light); font-style:italic; }
+.hero p { color:rgba(253,246,236,.6); font-size:13px; font-weight:300; position:relative; }
+
+.sec { max-width:480px; margin:20px auto 0; padding:0 20px; }
+.card { background:white; border-radius:16px; padding:20px; box-shadow:0 4px 20px rgba(44,31,14,.08); border:1px solid rgba(201,148,58,.1); }
+.card.hi { border:2px solid var(–gold); box-shadow:0 6px 28px rgba(201,148,58,.2); }
+.lbl { font-size:10px; font-weight:500; letter-spacing:2px; text-transform:uppercase; color:var(–muted); margin-bottom:6px; }
+.sec-title { font-family:‘Playfair Display’,serif; font-size:19px; color:var(–deep); margin-bottom:14px; }
+
+/* TODAY PULL */
+.pull { max-width:480px; margin:-28px auto 0; padding:0 20px; position:relative; z-index:10; animation:slideUp .5s ease both; }
+@keyframes slideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.subj-row { display:flex; align-items:center; gap:14px; border-radius:14px; padding:14px; margin-bottom:12px; }
+.subj-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
+.subj-name { font-family:‘Playfair Display’,serif; font-size:18px; color:var(–deep); font-weight:700; }
+.subj-detail { font-size:12px; color:var(–muted); margin-top:2px; }
+.msg { font-size:13px; color:var(–muted); font-style:italic; line-height:1.7; border-left:3px solid var(–gold-light); padding-left:12px; }
+.alert { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,#c9943a,#e8b96a); color:white; font-size:11px; font-weight:600; padding:5px 12px; border-radius:20px; margin-bottom:10px; }
+.phase-pill { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:600; padding:4px 12px; border-radius:20px; margin-bottom:10px; }
+
+/* PROGRESS */
+.prog-wrap { background:var(–warm); border-radius:10px; height:10px; overflow:hidden; margin:10px 0 6px; }
+.prog-fill { height:100%; border-radius:10px; background:linear-gradient(90deg,var(–gold),var(–gold-light)); transition:width 1.2s ease; }
+.prog-stats { display:flex; justify-content:space-between; font-size:12px; color:var(–muted); }
+
+/* COUNTDOWN */
+.cd { text-align:center; padding:10px 0; }
+.cd-num { font-family:‘Playfair Display’,serif; font-size:42px; font-weight:700; color:var(–gold); line-height:1; }
+.cd-lbl { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(–muted); margin-top:4px; }
+.cd-subj { font-size:13px; color:var(–text); font-weight:500; margin-top:8px; }
+
+/* TASKS */
+.task { display:flex; align-items:flex-start; gap:12px; padding:11px 0; border-bottom:1px solid var(–warm); }
+.task:last-child { border-bottom:none; }
+.task-time { font-size:11px; font-weight:600; color:var(–gold); min-width:52px; margin-top:2px; }
+.task-info { flex:1; }
+.task-text { font-size:13px; color:var(–text); line-height:1.5; }
+.task-topic { font-size:11px; color:var(–muted); margin-top:2px; }
+
+/* TIMELINE */
+.tl { position:relative; }
+.tl::before { content:’’; position:absolute; left:20px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom,var(–gold),transparent); }
+.tl-item { display:flex; gap:16px; margin-bottom:14px; animation:fadeIn .4s ease both; }
+@keyframes fadeIn { from{opacity:0;transform:translateX(-8px)} to{opacity:1;transform:translateX(0)} }
+.tl-dot { width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; z-index:1; border:3px solid white; box-shadow:0 2px 8px rgba(44,31,14,.1); }
+.tl-body { flex:1; background:white; border-radius:14px; padding:13px 15px; box-shadow:0 2px 10px rgba(44,31,14,.05); border:1px solid rgba(0,0,0,.04); }
+.tl-body.active { border:2px solid var(–gold); box-shadow:0 4px 18px rgba(201,148,58,.18); }
+.tl-body.done { opacity:.5; }
+.tl-subj { font-weight:600; font-size:15px; color:var(–deep); }
+.tl-meta { font-size:12px; color:var(–muted); margin-top:2px; }
+.tl-range { font-size:11px; color:var(–gold); font-weight:500; margin-top:4px; }
+.badge { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; margin-top:5px; }
+.phase-tag { font-size:10px; font-weight:600; letter-spacing:1px; text-transform:uppercase; padding:2px 8px; border-radius:6px; margin-bottom:10px; display:inline-block; }
+
+/* CHECKLIST */
+.chk { display:flex; align-items:center; gap:12px; background:white; border-radius:12px; padding:13px 15px; margin-bottom:9px; box-shadow:0 2px 8px rgba(44,31,14,.05); cursor:pointer; transition:transform .1s; -webkit-tap-highlight-color:transparent; }
+.chk:active { transform:scale(.98); }
+.chk.done { opacity:.5; background:var(–warm); }
+.chk-box { width:24px; height:24px; border-radius:7px; border:2px solid var(–gold); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.chk.done .chk-box { background:var(–gold); border-color:var(–gold); }
+.chk-lbl { font-size:14px; color:var(–text); }
+.chk.done .chk-lbl { text-decoration:line-through; color:var(–muted); }
+
+/* BUFFER */
+.buffer-card { background:linear-gradient(135deg,#fff8ee,#fdf0d8); border:2px dashed var(–gold-light); border-radius:16px; padding:18px 20px; margin-bottom:12px; }
+.buffer-title { font-weight:600; color:var(–deep); font-size:14px; margin-bottom:6px; }
+.buffer-text { font-size:13px; color:var(–muted); line-height:1.6; }
+
+/* QUOTE */
+.quote-card { background:linear-gradient(135deg,#2c1f0e,#4a3018); border-radius:20px; padding:28px 24px; text-align:center; position:relative; overflow:hidden; }
+.quote-card::before { content:’”’; position:absolute; top:-10px; left:16px; font-family:‘Playfair Display’,serif; font-size:100px; color:rgba(201,148,58,.15); line-height:1; }
+.quote-text { font-family:‘Playfair Display’,serif; font-size:16px; color:#fdf6ec; line-height:1.7; position:relative; }
+.quote-author { font-size:11px; color:var(–gold-light); margin-top:12px; letter-spacing:1px; text-transform:uppercase; }
+
+/* SESSION BLOCKS */
+.session { background:var(–warm); border-radius:12px; padding:14px; margin-bottom:10px; }
+.session-label { font-size:10px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:var(–gold); margin-bottom:8px; }
+
+/* NAV */
+.nav { position:fixed; bottom:0; left:0; right:0; background:white; border-top:1px solid var(–warm); display:flex; justify-content:space-around; padding:10px 0 16px; z-index:100; }
+.nb { display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10px; color:var(–muted); font-weight:500; letter-spacing:.5px; background:none; border:none; cursor:pointer; padding:4px 16px; -webkit-tap-highlight-color:transparent; }
+.nb.active { color:var(–gold); }
+.nb-icon { font-size:20px; }
+.page { display:none; }
+.page.active { display:block; }
+</style>
+
+</head>
+<body>
+
+<nav class="nav">
+  <button class="nb active" onclick="showPage('today',this)"><span class="nb-icon">🌸</span>Today</button>
+  <button class="nb" onclick="showPage('schedule',this)"><span class="nb-icon">📅</span>Plan</button>
+  <button class="nb" onclick="showPage('checklist',this)"><span class="nb-icon">✅</span>Tasks</button>
+  <button class="nb" onclick="showPage('love',this)"><span class="nb-icon">💛</span>For You</button>
+</nav>
+
+<!-- TODAY -->
+
+<div id="page-today" class="page active">
+  <div class="hero">
+    <div id="sp1"></div>
+    <div class="hero-badge">📚 Exam Season 2025</div>
+    <h1>You've got this,<br><em>habibi</em> 💛</h1>
+    <p>Your personal study guide</p>
+  </div>
+
+  <div class="pull">
+    <div class="card hi">
+      <div class="lbl">Today is</div>
+      <div style="font-family:'Playfair Display',serif;font-size:19px;color:var(--deep);margin-bottom:14px;" id="today-date"></div>
+      <div id="today-alert"></div>
+      <div class="subj-row" id="today-row">
+        <div class="subj-icon" id="today-icon"></div>
+        <div><div class="subj-name" id="today-name"></div><div class="subj-detail" id="today-detail"></div></div>
+      </div>
+      <div class="msg" id="today-msg"></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="card">
+      <div class="lbl">⏳ Next Exam</div>
+      <div class="cd" id="countdown"></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="card">
+      <div class="lbl">🗓 Journey Progress</div>
+      <div class="prog-wrap"><div class="prog-fill" id="prog"></div></div>
+      <div class="prog-stats"><span>27 Mar</span><span id="prog-pct"></span><span>2 Jul</span></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">📋 Today's Sessions</div>
+    <div id="sessions"></div>
+  </div>
+
+  <div id="buffer-sec" class="sec" style="display:none">
+    <div class="buffer-card">
+      <div class="buffer-title">🌿 No stress — you have a buffer day</div>
+      <div class="buffer-text" id="buffer-text"></div>
+    </div>
+  </div>
+
+  <div class="sec" style="margin-bottom:8px;">
+    <div class="quote-card">
+      <div class="quote-text" id="quote"></div>
+      <div class="quote-author">— a reminder, with love 💛</div>
+    </div>
+  </div>
+</div>
+
+<!-- PLAN -->
+
+<div id="page-schedule" class="page">
+  <div class="hero" style="padding-bottom:32px;">
+    <div class="hero-badge">Your Full Plan</div>
+    <h1><em>Smart</em> Schedule</h1>
+    <p>Furthest exam first · closest last</p>
+  </div>
+  <div class="sec" style="margin-top:24px;margin-bottom:8px;" id="tl-container"></div>
+</div>
+
+<!-- CHECKLIST -->
+
+<div id="page-checklist" class="page">
+  <div class="hero" style="padding-bottom:32px;">
+    <div class="hero-badge">Daily Tasks</div>
+    <h1><em>Check it</em> off 🎯</h1>
+    <p>Tap each task as you finish</p>
+  </div>
+  <div class="sec" style="margin-top:24px;" id="checklist"></div>
+</div>
+
+<!-- FOR YOU -->
+
+<div id="page-love" class="page">
+  <div class="hero" style="padding-bottom:40px;">
+    <div id="sp2"></div>
+    <div class="hero-badge">💛 From Him</div>
+    <h1>You are<br><em>extraordinary</em></h1>
+    <p>A message just for you</p>
+  </div>
+  <div class="sec" style="margin-top:24px;margin-bottom:8px;">
+    <div class="card" style="line-height:1.9;">
+      <div style="font-family:'Playfair Display',serif;font-size:18px;color:var(--deep);margin-bottom:14px;">To my love,</div>
+      <div style="font-size:14px;color:var(--text);">
+        I know these weeks feel heavy. The books, the topics, the pressure — it's a lot.<br><br>
+        But I know <em>you</em>. And the person who made it this far is more than capable of crossing this finish line. 🌟<br><br>
+        I built this plan carefully so your brain stays fresh — we study the hardest, furthest subjects first, and by the time each exam arrives, it's still right there in your memory. 🧠<br><br>
+        On the hard days — open this. Remember every page you read, every problem you work through — I see it, and I'm so proud of you.<br><br>
+        Study hard. Rest well. Eat something good. And when all of this is over, we celebrate. 🥂<br><br>
+        <strong style="color:var(--gold);">I believe in you. Always. 💛</strong>
+      </div>
+    </div>
+
+```
+<div style="margin-top:20px;">
+  <div class="sec-title">Why this order? 🧠</div>
+  <div class="card" style="font-size:13px;color:var(--text);line-height:1.8;">
+    We study <strong>Physics first, Biology last</strong> on purpose.<br><br>
+    Biology is your <em>first exam</em> — so we review it <em>last</em>, right before the exam, so it stays sharp in your memory. Physics is your last exam, so we study it first — it has the most time to settle.<br><br>
+    This way, nothing gets forgotten. Every subject is fresh when it matters most. 💡
+  </div>
+</div>
+
+<div style="margin-top:20px;">
+  <div class="sec-title">All subjects 💪</div>
+  <div id="love-subjects"></div>
+</div>
+```
+
+  </div>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+// Phase 1: General study, 5 non-Friday days starting 27 Mar
+// Phase 2: Review in reversed order (Physics→English→Chemistry→Arabic→Math→Kurdish→Biology)
+//          Each block sized by original day allocation (Physics:10, English:5, etc.)
+//          All fits exactly within Apr 2 → Jun 10 (60 non-Friday days)
+// Phase 3: Quick refresh in the gaps between exams
+
+const PHASE1 = [
+  { date:'2025-03-27', label:'General Study — Day 1' },
+  { date:'2025-03-29', label:'General Study — Day 2' },
+  { date:'2025-03-30', label:'General Study — Day 3' },
+  { date:'2025-03-31', label:'General Study — Day 4' },
+  { date:'2025-04-01', label:'General Study — Day 5' },
+];
+
+// Phase 2 blocks (reversed order, each day assigned a subject)
+// Pre-computed: Physics Apr2-13, English Apr14-19, Chemistry Apr20-30,
+//               Arabic May1-7, Math May8-19, Kurdish May20-25, Biology May26-Jun10
+const PHASE2_BLOCKS = [
+  { s:'Physics',      icon:'🔭', color:'#d8c4a8', exam:'2025-07-02', start:'2025-04-02', end:'2025-04-13', days:10 },
+  { s:'English',      icon:'🔤', color:'#c4d8a8', exam:'2025-06-28', start:'2025-04-14', end:'2025-04-19', days:5  },
+  { s:'Chemistry',    icon:'⚗️', color:'#e8b4b8', exam:'2025-06-25', start:'2025-04-20', end:'2025-04-30', days:10 },
+  { s:'Arabic & Ayn', icon:'✍️', color:'#e8c4a0', exam:'2025-06-21', start:'2025-05-01', end:'2025-05-07', days:6  },
+  { s:'Math',         icon:'📐', color:'#a8bfd8', exam:'2025-06-18', start:'2025-05-08', end:'2025-05-19', days:10 },
+  { s:'Kurdish',      icon:'📖', color:'#c4b4d8', exam:'2025-06-14', start:'2025-05-20', end:'2025-05-25', days:5  },
+  { s:'Biology',      icon:'🧬', color:'#a8c5a0', exam:'2025-06-11', start:'2025-05-26', end:'2025-06-10', days:14 },
+];
+
+// Phase 3: refresh gaps between exams
+const PHASE3_BLOCKS = [
+  { s:'Kurdish',      icon:'📖', color:'#c4b4d8', exam:'2025-06-14', start:'2025-06-12', end:'2025-06-12', days:1 },
+  { s:'Math',         icon:'📐', color:'#a8bfd8', exam:'2025-06-18', start:'2025-06-15', end:'2025-06-17', days:3 },
+  { s:'Arabic & Ayn', icon:'✍️', color:'#e8c4a0', exam:'2025-06-21', start:'2025-06-19', end:'2025-06-19', days:1 },
+  { s:'Chemistry',    icon:'⚗️', color:'#e8b4b8', exam:'2025-06-25', start:'2025-06-22', end:'2025-06-24', days:3 },
+  { s:'English',      icon:'🔤', color:'#c4d8a8', exam:'2025-06-28', start:'2025-06-26', end:'2025-06-26', days:1 },
+  { s:'Physics',      icon:'🔭', color:'#d8c4a8', exam:'2025-07-02', start:'2025-06-29', end:'2025-07-01', days:3 },
+];
+
+const MORNING_TASKS = {
+  'Physics':      [['9:00','Study a key law/concept 🔭','Forces, Energy, or Waves'],['10:30','Solve practice problems 📐','Apply the concept you studied']],
+  'English':      [['9:00','Read & summarize a passage 📄','Focus on comprehension'],['10:30','Grammar exercises 🔤','Tenses, sentence structure']],
+  'Chemistry':    [['9:00','Review reactions & equations ⚗️','Balancing, types of reactions'],['10:30','Stoichiometry problems 🧮','Practice calculations']],
+  'Arabic & Ayn': [['9:00','Read Arabic passage aloud 📖','Comprehension & pronunciation'],['10:30','Grammar review ✍️','Focus on one grammar rule']],
+  'Math':         [['9:00','Review formulas & theorems 📐','Write them out from memory'],['10:30','Solve 10 problems ✏️','Mixed topic practice']],
+  'Kurdish':      [['9:00','Read comprehension passage 📖','Summarize in your own words'],['10:30','Grammar exercises ✏️','Practice key rules']],
+  'Biology':      [['9:00','Study a system/topic 🧬','e.g. Cell biology, Genetics'],['10:30','Draw & label diagrams 🖊','Visual memory technique']],
+  'General':      [['9:00','Finish leftover material 📚','Whatever needs completing'],['10:30','Organize your notes 🗂','Tidy up each subject\'s notes']],
+};
+const AFTERNOON_TASKS = {
+  'Physics':      [['2:00','Work past exam questions 📝','Focus on calculation types'],['4:00','Write key formulas from memory 📋','No peeking!']],
+  'English':      [['2:00','Writing practice ✍️','Essay or paragraph'],['4:00','Vocabulary review 💬','10 new words']],
+  'Chemistry':    [['2:00','Periodic table study 🧪','Groups, periods, properties'],['4:00','Past exam questions 📝','Time yourself']],
+  'Arabic & Ayn': [['2:00','Essay writing practice ✍️','Full paragraph or essay'],['4:00','Ayn analysis 📖','Review key Ayn concepts']],
+  'Math':         [['2:00','Work through past papers 📝','Timed practice'],['4:00','Check & correct mistakes 🔍','Understand every error']],
+  'Kurdish':      [['2:00','Write a practice paragraph ✏️','Use today\'s vocabulary'],['4:00','Past exam questions 📝','Reading + writing section']],
+  'Biology':      [['2:00','Past exam questions 📝','Focus on today\'s topic'],['4:00','Review notes before sleep 📒','Read through once quietly']],
+  'General':      [['2:00','Review weakest subject 📚','Pick the one that needs most work'],['4:00','Light reading / notes review 📖','Wind down the session']],
+};
+
+const QUOTES = [
+  "Every hour you study today is a gift to your future self.",
+  "You don't have to feel ready — you just have to begin.",
+  "Small steps every day lead to big results on exam day.",
+  "Rest is part of the process. Sleep well tonight.",
+  "You've already proven how strong you are. Keep going.",
+  "One subject at a time. One page at a time. You've got this.",
+  "The effort you put in quietly is what makes you extraordinary.",
+  "When it gets hard, remember why you started.",
+  "Focus on today. Today is enough.",
+  "I'm proud of every single hour you put in. ♡",
+];
+
+// ── HELPERS ──────────────────────────────────────────────────────────────
+const D = s => { const d=new Date(s); d.setHours(0,0,0,0); return d; };
+const TODAY = () => { const d=new Date(); d.setHours(0,0,0,0); return d; };
+const daysBetween = (a,b) => Math.round((b-a)/86400000);
+const fmt  = (d,o) => d.toLocaleDateString('en-GB', o||{day:'numeric',month:'long'});
+const fmtS = d => d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+const dayN = d => d.toLocaleDateString('en-GB',{weekday:'long'});
+
+function getTodayBlock(td) {
+  // Phase 1?
+  for (let p of PHASE1) if (D(p.date).getTime()===td.getTime()) return { phase:1, label:p.label, s:'General' };
+  // Phase 2?
+  for (let b of PHASE2_BLOCKS) if (td>=D(b.start) && td<=D(b.end)) return { phase:2, ...b };
+  // Phase 3?
+  for (let b of PHASE3_BLOCKS) if (td>=D(b.start) && td<=D(b.end)) return { phase:3, ...b };
+  // Before start?
+  if (td < D('2025-03-27')) return { phase:0, s:'Not started yet' };
+  // After all exams?
+  if (td > D('2025-07-02')) return { phase:4, s:'Done!' };
+  return null;
+}
+
+function getDayNumber(td, block) {
+  if (!block || block.phase===0 || block.phase===4) return 1;
+  const start = D(block.start||'2025-03-27');
+  // Count non-Friday days from start to td
+  let d=new Date(start), count=0;
+  while (d<=td) { if(d.getDay()!==5) count++; d.setDate(d.getDate()+1); }
+  return count;
+}
+
+function getNextExam(td) {
+  const allExams = [...PHASE2_BLOCKS].sort((a,b)=>D(a.exam)-D(b.exam));
+  return allExams.find(e => D(e.exam) >= td);
+}
+
+// ── SPARKLES ─────────────────────────────────────────────────────────────
+function sparkle(id) {
+  const el=document.getElementById(id); if(!el) return;
+  for(let i=0;i<12;i++){
+    const s=document.createElement('div'); s.className='sparkle';
+    s.style.left=Math.random()*100+'%'; s.style.top=Math.random()*100+'%';
+    s.style.animationDelay=(Math.random()*3)+'s'; s.style.animationDuration=(2+Math.random()*2)+'s';
+    el.appendChild(s);
+  }
+}
+
+// ── BUILD TODAY ───────────────────────────────────────────────────────────
+function buildToday() {
+  const td = TODAY();
+  sparkle('sp1');
+
+  document.getElementById('today-date').textContent =
+    td.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  const block = getTodayBlock(td);
+  const iconEl   = document.getElementById('today-icon');
+  const nameEl   = document.getElementById('today-name');
+  const detailEl = document.getElementById('today-detail');
+  const msgEl    = document.getElementById('today-msg');
+  const alertEl  = document.getElementById('today-alert');
+  const rowEl    = document.getElementById('today-row');
+
+  if (td.getDay()===5) {
+    rowEl.style.background='#f0f7f0';
+    iconEl.textContent='🌙'; nameEl.textContent="It's Friday — Rest Day";
+    detailEl.textContent='No studying today. Recharge!';
+    msgEl.textContent='Your brain needs rest too. Eat well, relax, come back stronger tomorrow. 💛';
+    document.getElementById('sessions').innerHTML='<div class="card" style="text-align:center;padding:28px;color:var(--muted);font-style:italic;">It\'s a rest day 🌙<br>No sessions today.</div>';
+  } else if (!block || block.phase===0) {
+    iconEl.textContent='🌟'; nameEl.textContent='Journey starts tomorrow!';
+    detailEl.textContent='27 March — General Study begins';
+    msgEl.textContent="Get ready. Everything is planned and waiting for you. Let's do this. 💛";
+    document.getElementById('sessions').innerHTML='';
+  } else if (block.phase===4) {
+    iconEl.textContent='🎉'; nameEl.textContent='All Exams Done!';
+    detailEl.textContent='You made it — time to celebrate!';
+    msgEl.textContent='Every single subject. Done. I told you you could do it. 💛';
+    document.getElementById('sessions').innerHTML='';
+  } else {
+    const subj = block.s;
+    const color = block.color||'#f5e6c8';
+    rowEl.style.background=color+'44';
+    iconEl.style.background=color+'66'; iconEl.textContent=block.icon||'📚';
+    
+    const dayNum = getDayNumber(td, block);
+    const phaseLabel = block.phase===1 ? 'Phase 1 · General Study' : block.phase===2 ? 'Phase 2 · Review' : 'Phase 3 · Final Refresh';
+    const phaseBg = block.phase===1 ? '#e8f0ff' : block.phase===2 ? '#fff3e0' : '#e8f5e0';
+    const phaseCol = block.phase===1 ? '#5070c0' : block.phase===2 ? '#c9943a' : '#5a9a40';
+
+    alertEl.innerHTML=`<div class="phase-pill" style="background:${phaseBg};color:${phaseCol}">${phaseLabel} · Day ${dayNum}</div><br>`;
+
+    nameEl.textContent = block.phase===1 ? 'General Study' : (block.phase===3?'Final Refresh: ':'Study: ')+subj;
+
+    if (block.exam) {
+      const dLeft = daysBetween(td, D(block.exam));
+      detailEl.textContent=`${subj} exam in ${dLeft} day${dLeft!==1?'s':''} — ${fmtS(D(block.exam))}`;
+      if(dLeft<=2) alertEl.innerHTML+=`<div class="alert">⚡ Exam very soon!</div><br>`;
+      else if(dLeft<=5) alertEl.innerHTML+=`<div class="alert">🔥 Almost there!</div><br>`;
+    }
+
+    msgEl.textContent=[
+      `You're on day ${dayNum} of ${subj}. Stay focused — you're building something great. 💪`,
+      `${subj} today. Morning session, break, afternoon session. One step at a time. 📚`,
+      `Don't rush — understand it deeply. You've got this chapter. 🌟`,
+    ][td.getDate()%3];
+
+    // Sessions
+    const mTasks = MORNING_TASKS[subj]||MORNING_TASKS['General'];
+    const aTasks = AFTERNOON_TASKS[subj]||AFTERNOON_TASKS['General'];
+    document.getElementById('sessions').innerHTML=`
+      <div class="session">
+        <div class="session-label">☀️ Morning Session · 9:00 – 12:00</div>
+        ${mTasks.map(([time,text,topic])=>`
+          <div class="task">
+            <div class="task-time">${time}</div>
+            <div class="task-info"><div class="task-text">${text}</div><div class="task-topic">${topic}</div></div>
+          </div>`).join('')}
+        <div class="task"><div class="task-time">11:30</div><div class="task-info"><div class="task-text">☕ Break — eat, rest, breathe</div><div class="task-topic">30 minutes away from books</div></div></div>
+      </div>
+      <div class="session">
+        <div class="session-label">🌙 Afternoon Session · 2:00 – 5:30</div>
+        ${aTasks.map(([time,text,topic])=>`
+          <div class="task">
+            <div class="task-time">${time}</div>
+            <div class="task-info"><div class="task-text">${text}</div><div class="task-topic">${topic}</div></div>
+          </div>`).join('')}
+        <div class="task"><div class="task-time">5:30</div><div class="task-info"><div class="task-text">🌙 Done for today — well done!</div><div class="task-topic">Rest your brain, sleep before midnight</div></div></div>
+      </div>`;
+
+    // Buffer: show only if it's a phase3 block with only 1 day (tight)
+    if (block.phase===3 && block.days===1) {
+      document.getElementById('buffer-sec').style.display='block';
+      document.getElementById('buffer-text').textContent=
+        `Today is your only refresh day before the ${subj} exam. If you didn't cover everything, that's okay — focus on the most important topics and trust your earlier review. You already studied this. 💛`;
+    }
+  }
+
+  // Countdown
+  const next = getNextExam(td);
+  if (next) {
+    const d=daysBetween(td, D(next.exam));
+    document.getElementById('countdown').innerHTML=`
+      <div class="cd-num">${d}</div>
+      <div class="cd-lbl">days until</div>
+      <div class="cd-subj">${next.icon} ${next.s} exam — ${fmtS(D(next.exam))}</div>`;
+  }
+
+  // Progress
+  const start=D('2025-03-27'), end=D('2025-07-02');
+  const total=daysBetween(start,end);
+  const passed=Math.max(0,Math.min(total,daysBetween(start,td)));
+  document.getElementById('prog').style.width=Math.round(passed/total*100)+'%';
+  document.getElementById('prog-pct').textContent=Math.round(passed/total*100)+'% done';
+
+  // Quote
+  document.getElementById('quote').textContent=QUOTES[td.getDate()%QUOTES.length];
+}
+
+// ── BUILD TIMELINE ─────────────────────────────────────────────────────────
+function buildSchedule() {
+  const td = TODAY();
+  const container = document.getElementById('tl-container');
+
+  const phaseHeader = (label, color, bg) =>
+    `<div class="phase-tag" style="background:${bg};color:${color}">${label}</div>`;
+
+  let html = '';
+
+  // Phase 1
+  html += phaseHeader('📌 Phase 1 — General Study · 27 Mar – 1 Apr','#5070c0','#e8f0ff');
+  html += '<div class="tl" style="margin-bottom:20px;">';
+  PHASE1.forEach((p,i)=>{
+    const d=D(p.date); const done=td>d; const active=td.getTime()===d.getTime();
+    html+=`<div class="tl-item" style="animation-delay:${i*.06}s">
+      <div class="tl-dot" style="background:#e8f0ff">📚</div>
+      <div class="tl-body ${active?'active':''} ${done?'done':''}">
+        <div class="tl-subj">${p.label}</div>
+        <div class="tl-meta">${fmt(d,{weekday:'long',day:'numeric',month:'long'})}</div>
+        ${active?'<span class="badge" style="background:linear-gradient(135deg,#5070c0,#7090e0);color:white">📖 Today</span>':''}
+      </div></div>`;
+  });
+  html += '</div>';
+
+  // Phase 2
+  html += phaseHeader('📌 Phase 2 — Review (furthest → closest) · Apr–Jun','#c9943a','#fff3e0');
+  html += '<div class="tl" style="margin-bottom:20px;">';
+  PHASE2_BLOCKS.forEach((b,i)=>{
+    const s=D(b.start), e=D(b.end), exam=D(b.exam);
+    const done=td>e; const active=!done&&td>=s&&td<=e;
+    const dLeft=daysBetween(td,exam);
+    const badge=done
+      ?`<span class="badge" style="background:#e8f5e0;color:#5a9a40">✓ Done</span>`
+      :active
+        ?`<span class="badge" style="background:linear-gradient(135deg,#c9943a,#e8b96a);color:white">📖 Studying now · ${dLeft}d to exam</span>`
+        :`<span class="badge" style="background:var(--warm);color:var(--muted)">Exam in ${dLeft}d</span>`;
+    html+=`<div class="tl-item" style="animation-delay:${i*.06}s">
+      <div class="tl-dot" style="background:${b.color}">${b.icon}</div>
+      <div class="tl-body ${active?'active':''} ${done?'done':''}">
+        <div class="tl-subj">${b.s}</div>
+        <div class="tl-meta">Exam: ${fmt(exam,{day:'numeric',month:'long'})} · ${dayN(exam)}</div>
+        <div class="tl-range">Review: ${fmtS(s)} → ${fmtS(e)} (${b.days} days)</div>
+        ${badge}
+      </div></div>`;
+  });
+  html += '</div>';
+
+  // Phase 3
+  html += phaseHeader('📌 Phase 3 — Final Refresh (gaps between exams)','#5a9a40','#e8f5e0');
+  html += '<div class="tl" style="margin-bottom:8px;">';
+  // Biology exam first (no refresh needed, it's the first)
+  const bioExam = D('2025-06-11');
+  const bioDone = td>bioExam; const bioActive = td.getTime()===bioExam.getTime();
+  html+=`<div class="tl-item">
+    <div class="tl-dot" style="background:#a8c5a0">🧬</div>
+    <div class="tl-body ${bioDone?'done':''} ${bioActive?'active':''}">
+      <div class="tl-subj">Biology Exam</div>
+      <div class="tl-meta">${fmt(bioExam,{day:'numeric',month:'long',year:'numeric'})} · Wednesday</div>
+      <div class="tl-range">No refresh needed — reviewed last in Phase 2 ✨</div>
+      ${bioDone?'<span class="badge" style="background:#e8f5e0;color:#5a9a40">✓ Done</span>':''}
+    </div></div>`;
+
+  PHASE3_BLOCKS.forEach((b,i)=>{
+    const s=D(b.start), e=D(b.end), exam=D(b.exam);
+    const done=td>exam; const active=!done&&td>=s&&td<=e;
+    const dLeft=daysBetween(td,exam);
+    const badge=done
+      ?`<span class="badge" style="background:#e8f5e0;color:#5a9a40">✓ Done</span>`
+      :active
+        ?`<span class="badge" style="background:linear-gradient(135deg,#5a9a40,#7aba60);color:white">🔁 Refreshing now</span>`
+        :`<span class="badge" style="background:var(--warm);color:var(--muted)">Exam in ${dLeft}d</span>`;
+    html+=`<div class="tl-item" style="animation-delay:${i*.06}s">
+      <div class="tl-dot" style="background:${b.color}">${b.icon}</div>
+      <div class="tl-body ${active?'active':''} ${done?'done':''}">
+        <div class="tl-subj">${b.s} — Final Refresh + Exam</div>
+        <div class="tl-meta">Exam: ${fmt(exam,{day:'numeric',month:'long'})} · ${dayN(exam)}</div>
+        <div class="tl-range">Refresh: ${fmtS(s)} → ${fmtS(e)} (${b.days} day${b.days>1?'s':''})</div>
+        ${badge}
+      </div></div>`;
+  });
+  html += '</div>';
+
+  container.innerHTML = html;
+}
+
+// ── BUILD CHECKLIST ────────────────────────────────────────────────────────
+function buildChecklist() {
+  const td=TODAY();
+  const block=getTodayBlock(td);
+  const dateKey='chk_'+td.toISOString().slice(0,10);
+  const stored=JSON.parse(localStorage.getItem(dateKey)||'{}');
+
+  let tasks=[];
+  if(td.getDay()===5) {
+    tasks=['🌙 Rest and relax','🍽 Eat a proper meal','😴 Sleep early tonight','📵 Limit screens before bed','💆‍♀️ Do something you enjoy'];
+  } else if(block && (block.phase===1||block.phase===2||block.phase===3)) {
+    const subj=block.s;
+    const m=MORNING_TASKS[subj]||MORNING_TASKS['General'];
+    const a=AFTERNOON_TASKS[subj]||AFTERNOON_TASKS['General'];
+    tasks=[
+      ...m.map(([,t])=>t),
+      '☕ Take your break (30 min)',
+      ...a.map(([,t])=>t),
+      '💧 Drink water throughout the day',
+      '🍱 Eat a proper meal',
+      '🛏 Sleep before midnight',
+    ];
+  } else {
+    tasks=['📚 Get ready for tomorrow!','🗂 Organize your notes','😴 Sleep early'];
+  }
+
+  document.getElementById('checklist').innerHTML=tasks.map((t,i)=>{
+    const key='t'+i, c=stored[key]||false;
+    return `<div class="chk ${c?'done':''}" onclick="toggleChk(this,'${key}','${dateKey}')">
+      <div class="chk-box">${c?'<span style="color:white;font-size:13px">✓</span>':''}</div>
+      <div class="chk-lbl">${t}</div></div>`;
+  }).join('');
+}
+
+function toggleChk(el,key,dateKey){
+  el.classList.toggle('done');
+  const c=el.classList.contains('done');
+  el.querySelector('.chk-box').innerHTML=c?'<span style="color:white;font-size:13px">✓</span>':'';
+  const s=JSON.parse(localStorage.getItem(dateKey)||'{}');
+  s[key]=c; localStorage.setItem(dateKey,JSON.stringify(s));
+}
+
+// ── BUILD LOVE PAGE ────────────────────────────────────────────────────────
+function buildLove() {
+  sparkle('sp2');
+  const td=TODAY();
+  const all=[
+    {s:'Biology',icon:'🧬',color:'#a8c5a0',exam:'2025-06-11',phase:'Last reviewed · freshest for exam 1',days:14},
+    {s:'Kurdish', icon:'📖',color:'#c4b4d8',exam:'2025-06-14',phase:'Phase 2 review + 1 day refresh',days:5},
+    {s:'Math',    icon:'📐',color:'#a8bfd8',exam:'2025-06-18',phase:'Phase 2 review + 3 day refresh',days:10},
+    {s:'Arabic & Ayn',icon:'✍️',color:'#e8c4a0',exam:'2025-06-21',phase:'Phase 2 review + 1 day refresh',days:6},
+    {s:'Chemistry',icon:'⚗️',color:'#e8b4b8',exam:'2025-06-25',phase:'Phase 2 review + 3 day refresh',days:10},
+    {s:'English', icon:'🔤',color:'#c4d8a8',exam:'2025-06-28',phase:'Phase 2 review + 1 day refresh',days:5},
+    {s:'Physics', icon:'🔭',color:'#d8c4a8',exam:'2025-07-02',phase:'Studied first · most time to settle',days:10},
+  ];
+  document.getElementById('love-subjects').innerHTML=all.map(e=>`
+    <div style="background:white;border-radius:13px;padding:14px;margin-bottom:9px;box-shadow:0 2px 8px rgba(44,31,14,.05);border-left:4px solid ${e.color}">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div style="font-size:20px;margin-bottom:3px">${e.icon}</div>
+          <div style="font-weight:600;color:var(--deep)">${e.s}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">${e.phase}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-weight:700;font-size:15px;color:var(--deep)">${fmtS(D(e.exam))}</div>
+          <div style="font-size:12px;color:var(--muted)">${dayN(D(e.exam))}</div>
+          <div style="font-size:11px;color:var(--gold);margin-top:2px">${e.days} review days</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ── NAV ────────────────────────────────────────────────────────────────────
+function showPage(name,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(btn) btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+buildToday(); buildSchedule(); buildChecklist(); buildLove();
+</script>
+
+</body>
+</html>
